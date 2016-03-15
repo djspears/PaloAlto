@@ -7,4 +7,6 @@ This template uses the BYOL SKU for VM-Series. VM-Series image details for PAN-O
 * SKU:
 * Version: "latest"
 
-https://portal.azure.com/?clientOptimizations=false#blade/Microsoft_Azure_Compute/CreateMultiVmWizardBlade/internal_bladeCallId/anything/internal_bladeCallerParams/ {"initialData":{},"providerConfig":{"createUiDefinition":"https%3a%2f%2fraw.githubusercontent.com%2fPaloAltoNetworks%2fazure%2fmaster%2fbasic-template1-byol%2fCreateUiDefinition.json%3ftoken%3dAJHjA_JvAm6B2B4zGArVKJdUVv56oJQjks5W8bBpwA%253D%253D"}}
+<a href="https://portal.azure.com/?clientOptimizations=false#blade/Microsoft_Azure_Compute/CreateMultiVmWizardBlade/internal_bladeCallId/anything/internal_bladeCallerParams/ {"initialData":{},"providerConfig":{"createUiDefinition":"https%3a%2f%2fraw.githubusercontent.com%2fPaloAltoNetworks%2fazure%2fmaster%2fbasic-template1-byol%2fCreateUiDefinition.json%3ftoken%3dAJHjA_JvAm6B2B4zGArVKJdUVv56oJQjks5W8bBpwA%253D%253D"}}" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
