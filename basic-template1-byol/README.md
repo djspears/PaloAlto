@@ -8,6 +8,6 @@ This template uses the BYOL SKU for VM-Series. VM-Series image details for PAN-O
 * SKU:
 * Version: "latest"
 
-<a href="https://azuredeploy.net/?repository=azure/basic-template1-byol/azureDeploy.json" target="_blank">
+<a href="https://azuredeploy.net/?repository=https://raw.githubusercontent.com/PaloAltoNetworks/azure/master/basic-template1-byol/azureDeploy.json?token=AJHjAxCn6-bveR8EZwB8cKgTLz1Z6HAXks5W8c0dwA%3D%3D" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
