@@ -92,7 +92,7 @@
         "apiVersion": "2015-06-15",
         "location": "[resourceGroup().location]",
         "imagePublisher": "paloaltonetworks",
-	"imageSku" : "vmseriesbyol",
+	"imageSku" : "vmseriesbundle2",
 	"imageOffer" : "vm-series-testpass1-preview",
         "fwpublicIPName": "fwPublicIP",
         "virtualNetworkName": "fwVNET",
