@@ -94,7 +94,7 @@
         "imagePublisher": "paloaltonetworks",
 	"imageSku" : "vmseriesbundle2",
 	"imageOffer" : "vm-series-testpass1-preview",
-        "fwpublicIPName": "fwPublicIP",
+        "fwpublicIPName": "fwMgmtPublicIP",
         "virtualNetworkName": "fwVNET",
         "addressPrefix": "[concat(parameters('ipAddressPrefix'), '.0.0/16')]",
         "subnet0Name": "Mgmt",
@@ -341,7 +341,7 @@
                 "osDisk": {
                     "name": "osdisk",
                     "vhd": {
-                        "uri": "[concat('http://',parameters('newStorageAccount'),'.blob.core.windows.net/vhds/', 'osdisk', '-firewall', '.vhd')]"
+                        "uri": "[concat('http://', parameters('newStorageAccount'), '.blob.core.windows.net/vhds/', parameters('vmName'), '-', variables('imageOffer'), '-', variables('imageSku'), '.vhd')]"
                     },
                     "caching": "ReadWrite",
                     "createOption": "FromImage"

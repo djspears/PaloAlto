@@ -89,7 +89,7 @@
                 "domainNameLabel": "Unique DNS name prefix for public IP of management interface (eth0)"
             },
             "defaultValue": {
-                "publicIpAddressName": "publicIP",
+                "publicIpAddressName": "fwMgmtPublicIP",
                 "domainNameLabel": ""
             },
             "options": {
