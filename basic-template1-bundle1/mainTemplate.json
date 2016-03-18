@@ -17,7 +17,7 @@
 	},
         "storageAccountNewOrExisting" : {
             "type": "string",
-            "defaultValue" : "existing",
+            "defaultValue" : "new",
             "allowedValues" : [
                 "new",
                 "existing"
@@ -92,8 +92,8 @@
         "apiVersion": "2015-06-15",
         "location": "[resourceGroup().location]",
         "imagePublisher": "paloaltonetworks",
-	"imageSku" : "vmseriesbundle1",
-	"imageOffer" : "vm-series-testpass1-preview",
+    	"imageSku" : "bundle1",
+	    "imageOffer" : "vmseries-preview",
         "fwpublicIPName": "fwMgmtPublicIP",
         "virtualNetworkName": "fwVNET",
         "addressPrefix": "[concat(parameters('ipAddressPrefix'), '.0.0/16')]",

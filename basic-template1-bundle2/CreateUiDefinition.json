@@ -126,8 +126,8 @@
             "osPlatform": "Linux",
             "imageReference": {
               "publisher": "paloaltonetworks",
-              "offer": "vm-series-testpass1-preview",
-              "sku": "vmseriesbundle2"
+              "offer": "vmseries-preview",
+              "sku": "bundle2"
             }
           }
         ]
