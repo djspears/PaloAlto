@@ -4,12 +4,10 @@ This ARM template deploys a VM-Series next generation firewall VM in an Azure re
 
 This template uses the BYOL SKU for VM-Series. VM-Series image details for PAN-OS 7.1.0:
 * Publisher Name: paloaltonetworks
-* Offer name:
-* SKU:
-* Version: "latest"
+* Offer name: vmseries
+* SKU: byol (or bundle1 or bundle2)
+* Version: "latest" (or 7.1.0)
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fPaloAltoNetworks%2fazure%2fmaster%2fbasic-template1-byol%2fCreateUiDefinition.json%3ftoken%3dAJHjA_JvAm6B2B4zGArVKJdUVv56oJQjks5W8bBpwA%253D%253D" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-
-<img src="https://raw.githubusercontent.com/PaloAltoNetworks/azure/master/basic-template1-byol/AzureViz-SimpleTemplate.png?token=AJHjA6G2-C-LErmMPUsthVVEhReBe4H_ks5W9xw7wA%3D%3D"/>
