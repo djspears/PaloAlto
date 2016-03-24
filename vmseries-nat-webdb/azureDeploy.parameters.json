@@ -1,0 +1,39 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "value": "jshah"
+    },
+    "adminPassword": {
+      "value": "Pal0Alt0!29"
+    },
+    "userImageStorageAccountName": {
+      "value": "jmsbyolvms13"
+    },
+    "dnsNameForPublicIP": {
+      "value": "jmsbyolvms13"
+    },
+    "dnsNameForPublicIPNAT": {
+      "value": "jmsbyolvms13"
+    },
+    "vmName": {
+      "value": "jmsbyolvms123"
+    },
+    "osType": {
+      "value": "linux"
+    },
+    "vmSize": {
+      "value": "Standard_D3"
+    },
+    "fromGatewayLogin": {
+      "value": "199.167.55.50/32"
+    },
+    "addNameToConcat": {
+      "value": "PAVM"
+    },
+    "IPAddressPrefix": {
+      "value": "192.168"
+    }
+  }
+}

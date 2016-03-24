@@ -120,13 +120,15 @@
             "constraints": {
               "allowedSizes": [
                 "Standard_D3",
-                "Standard_D4"
-              ]
+                "Standard_D3_v2",
+                "Standard_D4",
+                "Standard_D4_v2",
+                "Standard_A4"              ]
             },
             "osPlatform": "Linux",
             "imageReference": {
               "publisher": "paloaltonetworks",
-              "offer": "vmseries-preview",
+              "offer": "vmseries",
               "sku": "byol"
             }
           }

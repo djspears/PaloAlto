@@ -61,7 +61,10 @@
             "type": "string",
             "allowedValues": [
                 "Standard_D3",
-                "Standard_D4"
+                "Standard_D3_v2",
+                "Standard_D4",
+                "Standard_D4_v2",
+                "Standard_A4"
             ],
             "metadata": {
                 "description": "Azure VM size for VM-Series"
@@ -92,8 +95,8 @@
         "apiVersion": "2015-06-15",
         "location": "[resourceGroup().location]",
         "imagePublisher": "paloaltonetworks",
-    	"imageSku" : "byol",
-	    "imageOffer" : "vmseries-preview",
+    	"imageSku" : "bundle1",
+	    "imageOffer" : "vmseries",
         "fwpublicIPName": "fwMgmtPublicIP",
         "virtualNetworkName": "fwVNET",
         "addressPrefix": "[concat(parameters('ipAddressPrefix'), '.0.0/16')]",
