@@ -96,7 +96,7 @@
         "location": "[resourceGroup().location]",
         "imagePublisher": "paloaltonetworks",
     	"imageSku" : "byol",
-	    "imageOffer" : "vmseries",
+	    "imageOffer" : "vmseries-preview",
         "fwpublicIPName": "fwMgmtPublicIP",
         "virtualNetworkName": "fwVNET",
         "addressPrefix": "[concat(parameters('ipAddressPrefix'), '.0.0/16')]",

@@ -128,7 +128,7 @@
             "osPlatform": "Linux",
             "imageReference": {
               "publisher": "paloaltonetworks",
-              "offer": "vmseries",
+              "offer": "vmseries-preview",
               "sku": "byol"
             }
           }
