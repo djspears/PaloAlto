@@ -13,11 +13,8 @@ Bootstrapping
 <li> To bootstrap in Azure you need to create a bootstrap package/container and store it as a data disk VHD.
 <li> The bootstrap disk then should be attached to a factory default VM-Series, either during deployment (as done in this template) or after deployment of VM-Series.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fPaloAltoNetworks%2fazure%2fmaster%2fbasic-template1-byol%2fCreateUiDefinition.json%3ftoken%3dAJHjA_JvAm6B2B4zGArVKJdUVv56oJQjks5W8bBpwA%253D%253D" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-
-a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPaloAltoNetworks%2Fazure%2Fmaster%2Fbootstrapping%2Fazuredeploy.json" target="_blank">
+<p>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/PaloAltoNetworks/azure/master/bootstrapping/azureDeploy.json?token=AJHjA1rYp_ZUST7ip_H2orGCEWn7qM-Lks5W_XRcwA%3D%3D" target="_blank">
     <img src="https://camo.githubusercontent.com/9285dd3998997a0835869065bb15e5d500475034/687474703a2f2f617a7572656465706c6f792e6e65742f6465706c6f79627574746f6e2e706e67" data-canonical-src="http://azuredeploy.net/deploybutton.png" style="max-width:100%;">
 </a>
+</p>
