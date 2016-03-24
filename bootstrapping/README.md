@@ -14,7 +14,7 @@ Bootstrapping
 <li> The bootstrap disk then should be attached to a factory default VM-Series, either during deployment (as done in this template) or after deployment of VM-Series.
 
 <p>
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/PaloAltoNetworks/azure/master/bootstrapping/azureDeploy.json?token=AJHjA1rYp_ZUST7ip_H2orGCEWn7qM-Lks5W_XRcwA%3D%3D" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fPaloAltoNetworks%2fazure%2fmaster%2fbootstrapping%2fazureDeploy.json%3ftoken%3dAJHjA1rYp_ZUST7ip_H2orGCEWn7qM-Lks5W_XRcwA%253D%253D" target="_blank">
     <img src="https://camo.githubusercontent.com/9285dd3998997a0835869065bb15e5d500475034/687474703a2f2f617a7572656465706c6f792e6e65742f6465706c6f79627574746f6e2e706e67" data-canonical-src="http://azuredeploy.net/deploybutton.png" style="max-width:100%;">
 </a>
 </p>
