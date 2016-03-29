@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "ARM Template for a VM-Series VM with 3 additional VMs and UDR rules.",
+  "description": "This ARM template deploys a VM-Series next generation firewall VM in an Azure resource group alongwith the following resources similar to a typical two tier architecture. It also addds the relevant user-defined route (UDR) tables to send all traffic through the VM-Series firewall.",
+  "summary": "ARM Template for a VM-Series VM with 3 additional VMs and UDR rules",
+  "githubUsername": "jigarhshah04",
+  "dateUpdated": "2016-03-22"
+}
