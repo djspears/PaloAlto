@@ -1,7 +1,0 @@
-{
-  "itemDisplayName": "Bootstraps a Palo Alto Networks VM-Series next generation firewall in Microsoft Azure.",
-  "description": "This template attaches a  data disk VHD in Azure as a bootstrap package/container for a VM-Series firewall",
-  "summary": "Bootstraps a VM-Series firewall for Microsoft Azure",
-  "githubUsername": "jigarhshah04",
-  "dateUpdated": "2016-03-22"
-}
