@@ -8,46 +8,37 @@
         "description": "This is the name of the your storage account"
       }
     },
-    "dnsNameForPublicIP": {
+    "dnsNameForFwPublicIP": {
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access PAN Firewall VM."
       }
     },
-    "dnsNameForPublicIPNAT": {
+    "dnsNameForNATPublicIP": {
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access NAT VM."
       }
     },
-    "vmName": {
+    "fwvmName": {
       "type": "string",
       "metadata": {
-        "description": "Name of PAN VM in the portal"
+        "description": "Name of VM-Seris VM in the portal"
       }
     },
     "adminUserName": {
       "type": "string",
       "metadata": {
-        "description": "UserName for the NAT and PAN firewall VM"
+        "description": "UserName for all VMs"
       }
     },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
-        "description": "Password for the NAT and PAN firewall VM"
+        "description": "Password for all VMs"
       }
     },
-    "osType": {
-      "type": "string",
-      "allowedValues": [
-        "linux"
-      ],
-      "metadata": {
-        "description": "This is the OS that NAT and PAN firewall VM will be running"
-      }
-    },
-    "vmSize": {
+    "fwVmSize": {
       "type": "string",
       "allowedValues": [
         "Standard_D3",
@@ -90,12 +81,6 @@
         "description": "This is the public IP address (run myipaddress in browser) from where you want to login"
       }
     },
-    "addNameToConcat": {
-      "type": "string",
-      "metadata": {
-        "description": "Deployment location (no spaces)"
-      }
-    },
     "IPAddressPrefix": {
       "type": "string",
       "defaultValue": "10.5",
@@ -122,15 +107,13 @@
     "location": "[resourceGroup().location]",
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
-    "OSDiskName": "panfirewallexample",
+    "OSDiskName": "vmseries",
     "fwSku" : "byol",
-    "fwOffer" : "vmseries-preview",
+    "fwOffer" : "vmseries1-preview",
     "fwPublisher": "paloaltonetworks",
     "fwpublicIPName": "fwPublicIP",
     "natPublicIPName": "natPublicIP",
-    "nameToUse": "[trim(replace(parameters('addNameToConcat'), ' ', '-'))]",
-    "vmName": "[concat('pan-vm-series-', variables('nameToUse'))]",
-    "virtualNetworkName": "[concat('fwVNET', variables('nameToUse'))]",
+    "virtualNetworkName": "fwVNET",
     "addressPrefix": "[concat(parameters('IPAddressPrefix'), '.0.0/16')]",
     "subnet0Name": "Mgmt",
     "subnet0Prefix": "[concat(parameters('IPAddressPrefix'), '.0.0/24')]",
@@ -188,7 +171,7 @@
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNameForPublicIP')]"
+          "domainNameLabel": "[parameters('dnsNameForFwPublicIP')]"
         }
       }
     },
@@ -200,7 +183,7 @@
       "properties": {  
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNameForPublicIPNAT')]"
+          "domainNameLabel": "[parameters('dnsNameForNATPublicIP')]"
         }
       } 
     },
@@ -614,7 +597,7 @@
       {
         "apiVersion": "[variables('apiVersion')]",
         "type": "Microsoft.Compute/virtualMachines",
-        "name": "[variables('vmName')]",
+        "name": "[parameters('fwVmName')]",
         "location": "[variables('location')]",
         "plan": {
            "name": "[variables('fwSku')]",
@@ -629,10 +612,10 @@
         ],
         "properties": {
             "hardwareProfile": {
-            "vmSize": "[parameters('vmSize')]"
+            "vmSize": "[parameters('fwVmSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('vmName')]",
+          "computerName": "[parameters('fwVmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -644,11 +627,11 @@
               "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(variables('vmName'),'-osDisk')]",
+            "name": "[concat(parameters('fwVmName'),'-osDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "vhd": {
-		"uri": "[concat('http://', parameters('userImageStorageAccountName'), '.blob.core.windows.net/vhds/', parameters('vmName'), '-',variables('fwOffer'), '-', variables('fwSku'), '.vhd')]"
+		"uri": "[concat('http://', parameters('userImageStorageAccountName'), '.blob.core.windows.net/vhds/', parameters('fwVmName'), '-',variables('fwOffer'), '-', variables('fwSku'), '.vhd')]"
             }
           }
         },
@@ -673,7 +656,7 @@
      {
         "apiVersion": "[variables('apiVersion')]",
         "type": "Microsoft.Compute/virtualMachines",
-        "name": "[concat('natInstance-', variables('nameToUse'))]",
+        "name": "nat-vm",
         "location": "[variables('location')]",
         "dependsOn": [
            "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '0')]",
@@ -687,7 +670,7 @@
                 "vmSize": "[parameters('gvmSize')]"
             },
             "osProfile": {
-                "computername": "pan-nat-vm",
+                "computername": "nat-vm",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]"
             },
@@ -720,7 +703,7 @@
      {  
         "apiVersion": "[variables('apiVersion')]",
         "type": "Microsoft.Compute/virtualMachines",
-        "name": "[concat('Websever-', variables('nameToUse'))]",
+        "name": "webserver-vm",
         "location": "[variables('location')]",
         "dependsOn": [
            "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '0')]",
@@ -734,7 +717,7 @@
                 "vmSize": "[parameters('gvmSize')]"
             },
             "osProfile": {
-                "computername": "pan-webserver-vm",
+                "computername": "webserver-vm",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]"
             },
@@ -767,7 +750,7 @@
      { 
         "apiVersion": "[variables('apiVersion')]",
         "type": "Microsoft.Compute/virtualMachines",
-        "name": "[concat('DB-', variables('nameToUse'))]",
+        "name": "database-vm",
         "location": "[variables('location')]",
         "dependsOn": [
            "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '0')]",
@@ -781,7 +764,7 @@
                 "vmSize": "[parameters('gvmSize')]"
             },
             "osProfile": {
-                "computername": "pan-database-vm",
+                "computername": "database-vm",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]"
             },
@@ -812,11 +795,11 @@
         }
      },
      { 
-        "name": "[concat('natInstance-', variables('nameToUse'),'/installcustomscript')]",
+        "name": "[concat('nat-vm','/installcustomscript')]",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
         "location": "[variables('location')]",
-        "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'natInstance-', variables('nameToUse'))]"],
+        "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'nat-vm')]"],
         "properties":
          {   
               "publisher": "Microsoft.OSTCExtensions",

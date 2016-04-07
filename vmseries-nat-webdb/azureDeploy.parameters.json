@@ -3,37 +3,33 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "adminUsername": {
-      "value": "jshah"
+      "value": "<UserName for all VMs in this template, cannot be admin or root>"
     },
     "adminPassword": {
-      "value": "Pal0Alt0!29"
+      "value": "<Password for all VMs>"
     },
     "userImageStorageAccountName": {
-      "value": "jmsbyolvms13"
+      "value": "<your storage account name: new/existing>"
     },
-    "dnsNameForPublicIP": {
-      "value": "jmsbyolvms13"
+    "dnsNameForFwPublicIP": {
+      "value": "<Globally unique lowercase name for VM-Series eth0 (MGMT)>"
     },
-    "dnsNameForPublicIPNAT": {
-      "value": "jmsbyolvms13"
+    "dnsNameForNATPublicIP": {
+      "value": "<Globally unique lowercase name for NAT VM>"
     },
-    "vmName": {
-      "value": "jmsbyolvms123"
+    "fwVmName": {
+      "value": "<Name of VM-Series in Azure portal>"
     },
-    "osType": {
-      "value": "linux"
-    },
-    "vmSize": {
+    "fwVmSize": {
       "value": "Standard_D3"
     },
     "fromGatewayLogin": {
-      "value": "199.167.55.50/32"
-    },
-    "addNameToConcat": {
-      "value": "PAVM"
+      "value": "<Your Source IP for Default NSG>"
     },
     "IPAddressPrefix": {
       "value": "192.168"
     }
   }
 }
+
+fullarmvms1
