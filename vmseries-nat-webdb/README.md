@@ -29,7 +29,8 @@ The template also configures Azure's user defined routing (UDR) table to force a
 You can download the templates and customize them as needed. To deploy them from Azure CLI use the following commands:
 azure login
 azure config mode arm
-azure create
+azure group create -v -n <ResourceGroupName>  -l <AzureLocatioName>  -d  <DeploymentLabel>  -f azureDeploy.json  -e azureDeploy.parameters.json
+ 
 
 See documentation on how to configure the VM-Series firewall after deployment. Here is a basic outline:
 * Connect to the firewall using the public IP or DNS assigned to eth0 of firewall
