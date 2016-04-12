@@ -23,11 +23,10 @@ This template lets you do customized deployments of VM-Series instead of deployi
 <li> Customize the azureDeploy.parameters.json file and then deploy it from your computer.
 <li> Install the latest <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/">Azure CLI</a> for your computer.</li>
     <ul>     
-    <code>
-    azure login
-    azure config mode arm
-    azure  group  template  validate  -g YourResourceGroupName -e  azureDeploy.json   -f  azureDeploy.parameters.json
-    azure group create -v -n YourResourceGroupName -l AzureRegion  -d  DeploymentLabel  -f azureDeploy.json -e azureDeploy.parameters.json
+    <code>azure login</code>
+    <code>azure config mode arm</code>
+    <code>azure  group  template  validate  -g YourResourceGroupName -e  azureDeploy.json   -f  azureDeploy.parameters.json</code>
+    <code>azure group create -v -n YourResourceGroupName -l AzureRegion  -d  DeploymentLabel  -f azureDeploy.json -e azureDeploy.parameters.json</code>
     </code>
  </ol>
 Check the status of your deployment: <break>
