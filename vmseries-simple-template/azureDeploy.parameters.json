@@ -2,19 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "newStorageAccount": {
-            "type": "string",
-            "metadata": {
-                "description": "Globally unique lowercase name of your storage account"
-            }
-        },
-        "storageAccountType": {
-            "type": "string",
-	    "metadata": {
-		"description": "The type of the Storage Account created"
-	    },
-	    "defaultValue":"Standard_LRS"
-	},
         "storageAccountNewOrExisting" : {
             "type": "string",
             "defaultValue" : "new",
@@ -26,14 +13,27 @@
                 "Description": "Indicates whether the Storage Account is new or existing"
             }
         },
-        "existingStorageAccountRG": {
+        "newStorageAccount": {
+            "type": "string",
+            "metadata": {
+                "description": "Globally unique lowercase name of your storage account"
+            }
+        },
+    "existingStorageAccountRG": {
             "type": "string",
             "defaultValue" : "",
             "metadata": {
                "description": "Storage Resource Group of the Existing VM."
             }
         },
-        "dnsNameForPublicIP": {
+        "storageAccountType": {
+            "type": "string",
+	    "metadata": {
+		"description": "The type of the Storage Account created"
+	    },
+	    "defaultValue":"Standard_LRS"
+	},
+    "dnsNameForPublicIP": {
             "type": "string",
             "metadata": {
                 "description": "Globally unique DNS name to access management interface of VM-Series firewall"
@@ -181,4 +181,3 @@
     }
   }
 }
-    
