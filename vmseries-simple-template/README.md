@@ -26,12 +26,12 @@ This template lets you do customized deployments of VM-Series instead of deployi
     <code>
     azure login
     azure config mode arm
-    azure  group  template  validate  -g <YourResourceGroupName> -e  azureDeploy.json   -f  azureDeploy.parameters.json
-    azure group create -v -n <YourResourceGroupName> -l <AzureRegion> -d <DeploymentLabel> -f azureDeploy.json -e azureDeploy.parameters.json
+    azure  group  template  validate  -g YourResourceGroupName -e  azureDeploy.json   -f  azureDeploy.parameters.json
+    azure group create -v -n YourResourceGroupName -l AzureRegion  -d  DeploymentLabel  -f azureDeploy.json -e azureDeploy.parameters.json
     </code>
  </ol>
-Check the status of your deployment:
-    CLI: azure vm show -g <YourResourceGroupName> -n <DeploymentLabel>
+Check the status of your deployment: <break>
+    CLI: azure vm show  -g YourResourceGroupName  -n DeploymentLabel <break>
     Azure Portal: Your Resource Group > Deployment or Alert Logs
 <p>
 If you are creating customized ARM templates you can use the following information to deploy VM-Series:
