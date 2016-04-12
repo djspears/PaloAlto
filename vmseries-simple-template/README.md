@@ -34,7 +34,7 @@ This template lets you do customized deployments of VM-Series instead of deployi
 </code></pre>
 
 Check the status of your deployment:
-<li> <code> CLI: azure vm show  -g YourResourceGroupName  -n DeploymentLabel </code>
+<li>CLI: <code>azure vm show  -g YourResourceGroupName  -n YourDeploymentLabel</code>
 <li>Azure Portal: Your Resource Group > Deployment or Alert Logs
 <p>
 If you are creating customized ARM templates you can use the following information to deploy VM-Series:
