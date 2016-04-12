@@ -22,8 +22,8 @@ This template lets you do customized deployments of VM-Series instead of deployi
 <li> Download the two JSON files: azureDeploy.json and azureDeploy.parameters.json
 <li> Customize the azureDeploy.parameters.json file and then deploy it from your computer.
 <li> Install the latest <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/">Azure CLI</a> for your computer.</li>
+<li> Deploy the ARM template:
  </ol>
-      
 <pre><code>
     azure login
     azure config mode arm
@@ -33,9 +33,9 @@ This template lets you do customized deployments of VM-Series instead of deployi
         -d  YourDeploymentLabel  -f azureDeploy.json -e azureDeploy.parameters.json
 </code></pre>
 
-Check the status of your deployment: <break>
-    CLI: azure vm show  -g YourResourceGroupName  -n DeploymentLabel <break>
-    Azure Portal: Your Resource Group > Deployment or Alert Logs
+Check the status of your deployment:
+<li> <code> CLI: azure vm show  -g YourResourceGroupName  -n DeploymentLabel </code>
+<li>Azure Portal: Your Resource Group > Deployment or Alert Logs
 <p>
 If you are creating customized ARM templates you can use the following information to deploy VM-Series:
 <li> Publisher name: paloaltonetworks
