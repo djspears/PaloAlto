@@ -1,7 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
+  "parameters": {
         "storageAccountNewOrExisting" : {
             "type": "string",
             "defaultValue" : "new",
@@ -15,6 +15,7 @@
         },
         "newStorageAccount": {
             "type": "string",
+            "defaultValue" : "",
             "metadata": {
                 "description": "Globally unique lowercase name of your storage account"
             }
@@ -23,7 +24,7 @@
             "type": "string",
             "defaultValue" : "",
             "metadata": {
-               "description": "Storage Resource Group of the Existing VM."
+               "description": "Existing storage account in a resource group."
             }
         },
         "storageAccountType": {
@@ -51,13 +52,6 @@
                 "description": "Username for VM-Series administrator"
             }
         },
-        "adminPassword": {
-            "type": "securestring",
-	    "defaultValue": "",
-            "metadata": {
-                "description": "Password for VM-Series administrator"
-            }
-        },
         "authenticationType": {
             "type": "string",
             "metadata": {
@@ -68,6 +62,13 @@
                 "password"
             ],
             "defaultValue": "password"
+        },
+        "adminPassword": {
+            "type": "securestring",
+	    "defaultValue": "",
+            "metadata": {
+                "description": "Password for VM-Series administrator"
+            }
         },
         "sshKey": {
             "type": "string",
@@ -107,7 +108,7 @@
       "metadata": {
         "description": "Name of the virtual network that the consumer wants to use"
       },
-      "defaultValue": "panVnet"
+      "defaultValue": "fwVNET"
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
@@ -179,5 +180,5 @@
         "description": "Trust subnet start address"
       }
     }
-  }
+    }
 }
