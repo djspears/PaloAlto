@@ -6,7 +6,7 @@ This ARM template deploys a VM-Series next generation firewall VM in an Azure re
 * 3 subnets: Mgmt, Untrust, Trust
 * VM-Series (BYOL edition) with 3 NIC's that map to above subnets
 
-This template lets you do customized deployments of VM-Series instead of deploying from the Azure Marketplace. You can deploy using the "Deploy Azure" button  or download the template and customize it to your needs.
+This template lets you do customized deployments of VM-Series instead of deploying from the Azure Marketplace. You can deploy using the "Deploy to Azure" button or download the template and customize it to your needs. You can also fork/customize the templates in your own GitHub repository.
 
 <p>
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPaloAltoNetworks%2Fazure%2Fmaster%2Fvmseries-simple-template%2FazureDeploy.json" target="_blank">
@@ -17,18 +17,17 @@ This template lets you do customized deployments of VM-Series instead of deployi
 </a>
 </p>
 
-<h3>Deploy ARM Template using Azure CLI in ARM mode</h3>
+<h4>Deploy ARM Template using Azure CLI in ARM mode</h4>
 <ol>
 <li> Download the two JSON files: azureDeploy.json and azureDeploy.parameters.json
 <li> Customize the azureDeploy.parameters.json file and then deploy it from your computer.
 <li> Install the latest <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/">Azure CLI</a> for your platform.
-<li>
     <ul> azure login
     <ul> azure config mode arm
     <ul> azure  group  template  validate  -g <YourResourceGroupName> -e  azureDeploy.json   -f  azureDeploy.parameters.json
 </li>
 <p>
-If you are creating customized templates you can use the following information to deploy VM-Series:
+If you are creating customized ARM templates you can use the following information to deploy VM-Series:
 <li> Publisher name: paloaltonetworks
 <li> Offer: vmseries1
 <li> SKU: byol or bundle1 or bundle2
