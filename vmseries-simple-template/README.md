@@ -2,7 +2,7 @@
 This ARM template deploys a VM-Series next generation firewall VM in an Azure resource group. It lets you select your:
 * Resource Group and Storage Account inside it
 * VNET's CIDR (/16 range) with 3 subnets: Mgmt, Untrust, Trust
-* VM-Series (BYOL edition) D3 VM with 3 NIC's that map to above subnets
+* Azure VM size and login for VM-Series (BYOL edition) with 3 NIC's that map to above subnets
 
 This template lets you do customized deployments of VM-Series instead of deploying from the Azure Marketplace. You can deploy using the "Deploy to Azure" button below or download the template and customize it to your needs. You can also fork the templates in to your own GitHub repository.
 
@@ -21,7 +21,7 @@ This template lets you do customized deployments of VM-Series instead of deployi
 <li> Install the latest <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/">Azure CLI</a> for your computer.</li>
 <li> Validate and deploy the ARM template:
  </ol>
-<pre><
+<pre>
     azure login
     azure config mode arm
     azure  group  template  validate  -g YourResourceGroupName \
