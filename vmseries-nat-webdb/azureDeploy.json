@@ -109,7 +109,7 @@
     "imageOffer": "UbuntuServer",
     "OSDiskName": "vmseries",
     "fwSku" : "byol",
-    "fwOffer" : "vmseries1-preview",
+    "fwOffer" : "vmseries1",
     "fwPublisher": "paloaltonetworks",
     "fwpublicIPName": "fwPublicIP",
     "natPublicIPName": "natPublicIP",

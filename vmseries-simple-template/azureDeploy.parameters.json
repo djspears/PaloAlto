@@ -1,7 +1,26 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-  "parameters": {
+    "parameters": {
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "region of resources"
+            }
+        },
+        "newStorageAccount": {
+            "type": "string",
+            "metadata": {
+                "description": "Globally unique lowercase name of your storage account"
+            }
+        },
+        "storageAccountType": {
+            "type": "string",
+	    "metadata": {
+		"description": "The type of the Storage Account created"
+	    },
+	    "defaultValue":"Standard_LRS"
+	},
         "storageAccountNewOrExisting" : {
             "type": "string",
             "defaultValue" : "new",
@@ -13,28 +32,14 @@
                 "Description": "Indicates whether the Storage Account is new or existing"
             }
         },
-        "newStorageAccount": {
+        "existingStorageAccountRG": {
             "type": "string",
             "defaultValue" : "",
             "metadata": {
-                "description": "Globally unique lowercase name of your storage account"
+               "description": "Storage Resource Group of the Existing VM."
             }
         },
-    "existingStorageAccountRG": {
-            "type": "string",
-            "defaultValue" : "",
-            "metadata": {
-               "description": "Existing storage account in a resource group."
-            }
-        },
-        "storageAccountType": {
-            "type": "string",
-	    "metadata": {
-		"description": "The type of the Storage Account created"
-	    },
-	    "defaultValue":"Standard_LRS"
-	},
-    "dnsNameForPublicIP": {
+        "dnsNameForPublicIP": {
             "type": "string",
             "metadata": {
                 "description": "Globally unique DNS name to access management interface of VM-Series firewall"
@@ -52,6 +57,13 @@
                 "description": "Username for VM-Series administrator"
             }
         },
+        "adminPassword": {
+            "type": "securestring",
+	    "defaultValue": "Pal0Alt0!29",
+            "metadata": {
+                "description": "Password for VM-Series administrator"
+            }
+        },
         "authenticationType": {
             "type": "string",
             "metadata": {
@@ -62,13 +74,6 @@
                 "password"
             ],
             "defaultValue": "password"
-        },
-        "adminPassword": {
-            "type": "securestring",
-	    "defaultValue": "",
-            "metadata": {
-                "description": "Password for VM-Series administrator"
-            }
         },
         "sshKey": {
             "type": "string",
@@ -81,10 +86,7 @@
             "type": "string",
             "allowedValues": [
                 "Standard_D3",
-                "Standard_D3_v2",
-                "Standard_D4",
-                "Standard_D4_v2",
-                "Standard_A4"  
+                "Standard_D4"
             ],
             "metadata": {
                 "description": "Azure VM size for VM-Series"
@@ -108,7 +110,7 @@
       "metadata": {
         "description": "Name of the virtual network that the consumer wants to use"
       },
-      "defaultValue": "fwVNET"
+      "defaultValue": "panVnet"
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
@@ -181,4 +183,4 @@
       }
     }
     }
-}
+  }
