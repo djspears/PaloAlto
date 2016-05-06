@@ -15,7 +15,7 @@ sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 50022 -j DNAT --to $1.
 
 # DNAT everything else to FW Untrust except itself
 sudo iptables -t nat -A PREROUTING -i eth0 \! -s $1.1.4 -j DNAT --to-destination $1.1.4
-sudo iptables -A FORWARD -i eth1 -j ACCEPT
+sudo iptables -A FORWARD -i eth0 -j ACCEPT
  
 # MASQUERADE all other outdoing traffic from NAT
 sudo iptables -t nat -A POSTROUTING -j MASQUERADE
@@ -25,7 +25,6 @@ sudo iptables -t nat -A POSTROUTING -j MASQUERADE
 # This will work only on Ubuntu
 sudo iptables-save -c > /etc/iptables.rules
 printf "#!/bin/sh \niptables-restore < /etc/iptables.rules\nexit 0\n" > /etc/network/if-pre-up.d/iptablesload
-printf "#!/bin/sh\niptables-save -c > /etc/iptables.rules\nif [ -f /etc/iptables.downrules ]; then\n   iptables-restore < /etc/iptables.downrules\nfi\nexit 0\n" > /etc/network/if-post-dow
-n.d/iptablessave
+printf "#!/bin/sh\niptables-save -c > /etc/iptables.rules\nif [ -f /etc/iptables.downrules ]; then\n   iptables-restore < /etc/iptables.downrules\nfi\nexit 0\n" > /etc/network/if-post-down.d/iptablessave
 sudo chmod +x /etc/network/if-post-down.d/iptablessave
 sudo chmod +x /etc/network/if-pre-up.d/iptablesload
