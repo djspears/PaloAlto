@@ -806,7 +806,7 @@
               "type": "CustomScriptForLinux",
               "typeHandlerVersion": "1.2",
               "settings": {
-                 "fileUris": ["https://raw.githubusercontent.com/saurabhtrekker/master/master/iptables-ipsec-nat.sh"],
+                 "fileUris": ["https://raw.githubusercontent.com/PaloAltoNetworks/azure/master/vmseries-nat-webdb/iptables-ipsec-nat.sh"],
                  "commandToExecute": "[concat('/bin/bash iptables-ipsec-nat.sh ', parameters('IPAddressPrefix'))]"
              }
         }
