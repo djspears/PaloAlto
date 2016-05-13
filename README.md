@@ -10,13 +10,12 @@ Expected availability dates of VM-Series in Azure Marketplace:
 <li><a href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/#deploy-with-azure-cli">Deploying ARM Templates</a>
 
 NOTE: 
-<li> Deploying ARM templates requires some customization of the JSON. Please review the basic structre of ARM templates.
-<li> When deploying an ARM template you may see the following error:
+<li>Deploying ARM templates requires some customization of the JSON. Please review the basic structre of ARM templates.
+<li>Before you use the custom ARM templates here, you must first deploy the related SKU from the Azure Marketplace into the intended/destination Azure location. This enables programmatic access (i.e. template-based deployments) to deploy the SKU from Azure Marketplace. You can then delete the Marketplace-based deployment if you don't need it.
+<li>For example, if you plan to use a custom ARM template to deploy a BYOL VM of VM-Series into Australia-East, then first deploy the BYOL VM from Marketplace into Australia. This is needed only once, the first time. You can then delete this VM and its related resources. Now your ARM templates, from GitHub or via CLI, will work.
+<li>When deploying an ARM template you may see the following error if above steps have not been done once for each SKU:
     <pre>
     "ResourceDeploymentFailure\",\r\n \"message\": \"The resource operation completed with terminal provisioning state 
     'Failed'.\",\r\n \"details\": [\r\n {\r\n \"code\": \"ImageNotFound\",\r\n \"message\": 
     \"The platform image 'paloaltonetworks:vmseries1:byol:latest' is not available. 
-    Verify that all fields in the storage profile are correct.\"
-    </pre> 
-<li>Before you use the custom ARM templates here, you must first deploy the related SKU from the Azure Marketplace into the intended/destination Azure location. This enables programmatic access (i.e. template-based deployments) to deploy the SKU from Azure Marketplace. You can then delete the Marketplace-based deployment if you don't need it.
-<li> For example, if you plan to use a custom ARM template to deploy a BYOL VM of VM-Series into Australia-East, then first deploy the BYOL VM from Marketplace into Australia. This is needed only once, the first time. You can then delete this VM and its related resources. Now your ARM templates, from GitHub or via CLI, will work. 
+    Verify that all fields in the storage profile are correct.\" </pre>  
