@@ -6,7 +6,16 @@ This ARM template deploys a VM-Series next generation firewall VM in an Azure re
 * Web VM - an Ubuntu VM (A1) that can be setup as a web server
 * DB VM - an Ubuntu VM (A1) that can be setup with a database
 
-The template deploys them into the following VNET layout:
+<p>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPaloAltoNetworks%2Fazure%2Fmaster%2Fvmseries-nat-webdb%2FazureDeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FPaloAltoNetworks%2Fazure%2Fmaster%2Fvmseries-nat-webdb%2FazureDeploy.json">
+    <img src="https://camo.githubusercontent.com/536ab4f9bc823c2e0ce72fb610aafda57d8c6c12/687474703a2f2f61726d76697a2e696f2f76697375616c697a65627574746f6e2e706e67" data-canonical-src="http://armviz.io/visualizebutton.png" style="max-width:100%;">
+</a>
+</p>
+
+The template deploys them into the following VNET layout. For detailed documentation on how to deploy this template <a href="https://github.com/PaloAltoNetworks/azure/raw/master/vmseries-nat-webdb/Azure_VM-Series_ARM_NAT_template_deployment_guide_v3.pdf">see here</a>.
 * VNET : 192.168.0.0/16
 * Mgmt Subnet: 192.168.0.0/24 - For the firewall's management interface (eth0)
 * Untrust Subnet: 192.168.1.0/24 - For eth1 of firewall
@@ -16,15 +25,6 @@ The template deploys them into the following VNET layout:
 * NAT Subnet: 192.168.5.0/24
 
 The template also configures Azure's user defined routing (UDR) table to force all packets through the VM-Series firewall. This provides visibility to all traffic from the VM-Series dashboard and allows you to enforce advanced security policies to protect your Azure deployment. 
-
-<p>
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPaloAltoNetworks%2Fazure%2Fmaster%2Fvmseries-nat-webdb%2FazureDeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FPaloAltoNetworks%2Fazure%2Fmaster%2Fvmseries-nat-webdb%2FazureDeploy.json">
-    <img src="https://camo.githubusercontent.com/536ab4f9bc823c2e0ce72fb610aafda57d8c6c12/687474703a2f2f61726d76697a2e696f2f76697375616c697a65627574746f6e2e706e67" data-canonical-src="http://armviz.io/visualizebutton.png" style="max-width:100%;">
-</a>
-</p>
 
 You can download the templates and customize them as needed. To deploy them from Azure CLI use the following commands:
 azure login
