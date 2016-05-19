@@ -33,7 +33,7 @@ You can also download the templates and customize them as needed. To deploy them
 <pre>
 azure login
 azure config mode arm
-azure group create -v -n <i>ResourceGroupName</i>  -l <i>Azure-LocationName</i>  -d  <i>DeploymentLabel<i>  \
+azure group create -v -n <i>ResourceGroupName</i>  -l <i>AzureLocationName</i>  -d  <i>DeploymentLabel</i>  \
     -f azureDeploy.json  -e azureDeploy.parameters.json
 For example:
 azure group create  -n myResGp1  -l westus  -d myResGp1Dep1  \
