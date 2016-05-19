@@ -33,7 +33,11 @@ You can also download the templates and customize them as needed. To deploy them
 <pre>
 azure login
 azure config mode arm
-azure group create -v -n <i>ResourceGroupName</i>  -l <i>AzureLocatioName</i>  -d  <i>DeploymentLabel/<i>  -f azureDeploy.json  -e azureDeploy.parameters.json
+azure group create -v -n <i>ResourceGroupName</i>  -l <i>Azure-LocationName</i>  -d  <i>DeploymentLabel<i>  \
+    -f azureDeploy.json  -e azureDeploy.parameters.json
+For example:
+azure group create  -n myResGp1  -l westus  -d myResGp1Dep1  \
+    -f azureDeploy.json  -e azureDeploy.parameters.json
 </pre> 
 
 See documentation on how to configure the VM-Series firewall after deployment. Here is a basic outline:
