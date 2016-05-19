@@ -1,11 +1,6 @@
 # VM-Series with NAT VM, and VM's for Web and DB subnet
 This ARM template deploys a VM-Series next generation firewall VM in an Azure resource group alongwith the following resources similar to a typical two tier architecture. It also addds the relevant user-defined route (UDR) tables to send all traffic through the VM-Series firewall. 
 
-* VM-Series Next generation firewall - (D3 VM size)
-* NAT VM - an Ubuntu VM (A1) with iptables to forward all packets to Untrust of VM-Series firewall
-* Web VM - an Ubuntu VM (A1) that can be setup as a web server
-* DB VM - an Ubuntu VM (A1) that can be setup with a database
-
 <p>
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPaloAltoNetworks%2Fazure%2Fmaster%2Fvmseries-nat-webdb%2FazureDeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -15,7 +10,15 @@ This ARM template deploys a VM-Series next generation firewall VM in an Azure re
 </a>
 </p>
 
-The template deploys them into the following VNET layout. For detailed documentation on how to deploy this template <a href="https://github.com/PaloAltoNetworks/azure/raw/master/vmseries-nat-webdb/Azure_VM-Series_ARM_NAT_template_deployment_guide_v3.pdf">see here</a>.
+<a href="https://github.com/PaloAltoNetworks/azure/blob/master/vmseries-nat-webdb/Azure_VM-Series_ARM_NAT_template_deployment_guide_v3.pdf">Deployment guide</a> for this template.
+
+Virtual Machines:
+* VM-Series Next generation firewall - (D3 VM size)
+* NAT VM - an Ubuntu VM (A1) with iptables to forward all packets to Untrust of VM-Series firewall
+* Web VM - an Ubuntu VM (A1) that can be setup as a web server
+* DB VM - an Ubuntu VM (A1) that can be setup with a database
+
+Virtual Network (VNET):
 * VNET : 192.168.0.0/16
 * Mgmt Subnet: 192.168.0.0/24 - For the firewall's management interface (eth0)
 * Untrust Subnet: 192.168.1.0/24 - For eth1 of firewall
@@ -24,9 +27,9 @@ The template deploys them into the following VNET layout. For detailed documenta
 * DB Subnet: 192.168.4.0/24
 * NAT Subnet: 192.168.5.0/24
 
-The template also configures Azure's user defined routing (UDR) table to force all packets through the VM-Series firewall. This provides visibility to all traffic from the VM-Series dashboard and allows you to enforce advanced security policies to protect your Azure deployment. 
+Note: The template also configures Azure user defined routing (UDR) table to force all packets through the VM-Series firewall. This provides visibility to all traffic from the VM-Series dashboard and allows you to enforce advanced security policies to protect your Azure deployment. 
 
-You can download the templates and customize them as needed. To deploy them from Azure CLI use the following commands:
+You can also download the templates and customize them as needed. To deploy them from Azure CLI use the following commands:
 azure login
 azure config mode arm
 azure group create -v -n <ResourceGroupName>  -l <AzureLocatioName>  -d  <DeploymentLabel>  -f azureDeploy.json  -e azureDeploy.parameters.json
