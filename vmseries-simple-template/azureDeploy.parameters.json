@@ -59,7 +59,7 @@
         },
         "adminPassword": {
             "type": "securestring",
-	    "defaultValue": "Pal0Alt0!29",
+	    "defaultValue": "<YOUR PASSWORD",
             "metadata": {
                 "description": "Password for VM-Series administrator"
             }
