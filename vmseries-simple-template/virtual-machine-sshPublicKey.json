@@ -88,17 +88,17 @@
             },
             "networkProfile": {
                 "networkInterfaces": [{
-                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('nicName'),'0'))]",
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('vmName'),parameters('nicName'),'0'))]",
                     "properties": {
                         "primary": true
                     }
                 }, {
-                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('nicName'),'1'))]",
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('vmName'),parameters('nicName'),'1'))]",
                     "properties": {
                         "primary": false
                     }
                 }, {
-                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('nicName'),'2'))]",
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('vmName'),parameters('nicName'),'2'))]",
                     "properties": {
                         "primary": false
                     }
