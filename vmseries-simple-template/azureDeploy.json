@@ -189,7 +189,7 @@
     	"imageSku" : "byol",
 	"imageOffer" : "vmseries1",
         "fwpublicIPName": "fwMgmtPublicIP",
-        "nicName": "[concat(parameters('vmName'), "eth")]",
+        "nicName": "[concat(parameters('vmName'), 'eth')]",
         "FWPrivateIPAddressUntrust": "[parameters('subnet1StartAddress')]",
         "FWPrivateIPAddressTrust": "[parameters('subnet2StartAddress')]",
         "publicIPAddressType": "Dynamic",
