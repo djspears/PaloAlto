@@ -107,7 +107,7 @@
 		"metadata": {
 			"artifactsBaseUrl": ""
 		},
-		"defaultValue": "https://raw.githubusercontent.com/saurabhtrekker/UI1/master"
+		"defaultValue": "https://raw.githubusercontent.com/djspears/UI1/master"
 	},
     "virtualNetworkName": {
       "type": "string",
