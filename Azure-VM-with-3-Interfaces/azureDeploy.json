@@ -97,6 +97,7 @@
         },
         "srcIPInboundNSG": {
             "type": "string",
+            "defaultValue" : "0.0.0.0/0",
             "metadata": {
                 "description": "Your source public IP address. Added to the inbound DefaultNSG on eth0 (MGMT)"
             }
@@ -343,6 +344,11 @@
                 "properties": {
                     "addressPrefix": "[parameters('subnet2Prefix')]"
                 }
+            },{
+                "name": "[parameters('subnet3Name')]",
+                "properties": {
+                    "addressPrefix": "[parameters('subnet3Prefix')]"
+                }
             }]
         }
     }, {
@@ -453,7 +459,7 @@
          "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '0')]",
          "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '1')]",
          "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '2')]",
-         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '2')]"
+         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '3')]"
       ],
       "properties": {
         "mode": "Incremental",
