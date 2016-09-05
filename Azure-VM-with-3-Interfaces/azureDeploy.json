@@ -4,6 +4,7 @@
     "parameters": {
         "location": {
             "type": "string",
+            "defaultValue" : "Central US",
             "metadata": {
                 "description": "region of resources"
             }
@@ -23,7 +24,7 @@
 	},
         "storageAccountNewOrExisting" : {
             "type": "string",
-            "defaultValue" : "new",
+            "defaultValue" : "existing",
             "allowedValues" : [
                 "new",
                 "existing"
@@ -53,6 +54,7 @@
         },
         "adminUserName": {
             "type": "string",
+            "defaultValue" : "davidspears",
             "metadata": {
                 "description": "Username for VM-Series administrator"
             }
@@ -84,6 +86,7 @@
         },
         "vmSize": {
             "type": "string",
+            "defaultValue" : "Standard_D3",
             "allowedValues": [
                 "Standard_D3",
                 "Standard_D4"
@@ -103,18 +106,18 @@
 		"metadata": {
 			"artifactsBaseUrl": ""
 		},
-		"defaultValue": "https://raw.githubusercontent.com/saurabhtrekker/UI1/master"
+		"defaultValue": "https://raw.githubusercontent.com/djspears/UI1/master"
 	},
     "virtualNetworkName": {
       "type": "string",
       "metadata": {
         "description": "Name of the virtual network that the consumer wants to use"
       },
-      "defaultValue": "panVnet"
+      "defaultValue": "fwVnet"
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
-      "defaultValue": "192.168.0.0/16",
+      "defaultValue": "10.0.0.0/16",
       "metadata": {
         "description": "Virtual network address CIDR"
       }
@@ -140,46 +143,67 @@
         "description": "Subnet for the Trust"
       }
     },
+    "subnet3Name": {
+      "type": "string",
+      "defaultValue": "Restricted",
+      "metadata": {
+        "description": "Subnet for the Restricted Servers"
+      }
+    },
     "subnet0Prefix": {
       "type": "string",
-      "defaultValue": "192.168.0.0/24",
+      "defaultValue": "10.0.100.0/24",
       "metadata": {
         "description": "Mgmt subnet CIDR"
       }
     },
     "subnet1Prefix": {
       "type": "string",
-      "defaultValue": "192.168.1.0/24",
+      "defaultValue": "10.0.101.0/24",
       "metadata": {
         "description": "Untrust subnet CIDR"
       }
     },
     "subnet2Prefix": {
       "type": "string",
-      "defaultValue": "192.168.2.0/24",
+      "defaultValue": "10.0.102.0/24",
       "metadata": {
         "description": "Trust subnet CIDR"
       }
     },
+    "subnet3Prefix": {
+      "type": "string",
+      "defaultValue": "10.0.103.0/24",
+      "metadata": {
+        "description": "Restricted subnet CIDR"
+      }
+    },
     "subnet0StartAddress": {
       "type": "string",
-      "defaultValue": "192.168.0.4",
+      "defaultValue": "10.0.100.4",
       "metadata": {
         "description": "Mgmt subnet start address"
       }
     },
     "subnet1StartAddress": {
       "type": "string",
-      "defaultValue": "192.168.1.4",
+      "defaultValue": "10.0.101.4",
       "metadata": {
         "description": "Untrust subnet start address"
       }
     },
     "subnet2StartAddress": {
       "type": "string",
-      "defaultValue": "192.168.2.4",
+      "defaultValue": "10.0.102.4",
       "metadata": {
         "description": "Trust subnet start address"
+      }
+    },
+    "subnet3StartAddress": {
+      "type": "string",
+      "defaultValue": "10.0.103.4",
+      "metadata": {
+        "description": "Restricted subnet start address"
       }
     }
     },
