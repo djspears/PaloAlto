@@ -4,6 +4,7 @@
     "parameters": {
         "location": {
             "type": "string",
+            "defaultValue" : "Central US",
             "metadata": {
                 "description": "region of resources"
             }
@@ -123,28 +124,28 @@
     },
     "subnet0Name": {
       "type": "string",
-      "defaultValue": "Mgmt",
+      
       "metadata": {
         "description": "Subnet for the Mgmt"
       }
     },
     "subnet1Name": {
       "type": "string",
-      "defaultValue": "Untrust",
+      
       "metadata": {
         "description": "Subnet for the Untrust"
       }
     },
     "subnet2Name": {
       "type": "string",
-      "defaultValue": "Trust",
+      
       "metadata": {
         "description": "Subnet for the Trust"
       }
     },
     "subnet3Name": {
       "type": "string",
-      "defaultValue": "DMZ",
+    
       "metadata": {
         "description": "Subnet for the DMZ"
       }
