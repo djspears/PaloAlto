@@ -4,6 +4,7 @@
     "parameters": {
         "location": {
             "type": "string",
+            "defaultValue" : "Central US",
             "metadata": {
                 "description": "region of resources"
             }
