@@ -23,7 +23,7 @@
 	},
         "storageAccountNewOrExisting" : {
             "type": "string",
-            "defaultValue" : "new",
+            "defaultValue" : "existing",
             "allowedValues" : [
                 "new",
                 "existing"
@@ -113,11 +113,11 @@
       "metadata": {
         "description": "Name of the virtual network that the consumer wants to use"
       },
-      "defaultValue": "panVnet"
+      "defaultValue": "fwVnet"
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/16",
+      "defaultValue": "10.0.100.0/16",
       "metadata": {
         "description": "Virtual network address CIDR"
       }
