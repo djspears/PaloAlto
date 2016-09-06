@@ -1,7 +1,0 @@
-{
-  "itemDisplayName": "Simple ARM Template for a VM-Series VM (BYOL)",
-  "description": "This template lets you do customized deployments of VM-Series instead of deploying from the Azure Marketplace. You can deploy using the "Deploy Azure" button  or download the template and customize it to your needs.",
-  "summary": "Simple ARM Template for a VM-Series VM with 3 NICs and subnets",
-  "githubUsername": "jigarhshah04",
-  "dateUpdated": "2016-04-11"
-}
