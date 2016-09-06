@@ -142,9 +142,9 @@
     },
     "subnet3Name": {
       "type": "string",
-      "defaultValue": "Restricted",
+      "defaultValue": "DMZ",
       "metadata": {
-        "description": "Subnet for the Restricted"
+        "description": "Subnet for the DMZ"
       }
     },
     "subnet0Prefix": {
@@ -172,7 +172,7 @@
       "type": "string",
       "defaultValue": "10.0.103.0/24",
       "metadata": {
-        "description": "Restricted subnet CIDR"
+        "description": "DMZ subnet CIDR"
       }
     },
     "subnet0StartAddress": {
@@ -200,7 +200,7 @@
       "type": "string",
       "defaultValue": "10.0.103.4",
       "metadata": {
-        "description": "Trust subnet start address"
+        "description": "DMZ subnet start address"
       }
     }
     }
