@@ -2,11 +2,6 @@
 
 This is a "non official" repository for Azure Resoure Manager (ARM) templates to deploy VM-Series Next-Generation firewall from Palo Alto Networks in to the Azure public cloud.  I created this repository to enable the ability to deploy a firewall with 4 interfaces.  Mgmt, Trust, Untrust, and Restricted
 
-Expected availability dates of VM-Series in Azure Marketplace:
-
-- BYOL - Now available in [Azure Marketplace](https://azure.microsoft.com/en-us/marketplace/partners/paloaltonetworks/vmseriesbyol-template2template2-3nic-3subnetbyol)
-- PAYG - To be announced
-
 **Documentation**
 
 - [Technical documentation](https://www.paloaltonetworks.com/documentation/71/virtualization/virtualization/set-up-the-vm-series-firewall-in-azur)
