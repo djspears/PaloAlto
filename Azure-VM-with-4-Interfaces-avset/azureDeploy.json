@@ -53,6 +53,7 @@
         },
         "adminUserName": {
             "type": "string",
+            "defaultValue": "fwadmin",
             "metadata": {
                 "description": "Username for VM-Series administrator"
             }
@@ -84,6 +85,7 @@
         },
         "vmSize": {
             "type": "string",
+            "defaultValue": "Standard_D3",
             "allowedValues": [
                 "Standard_D3",
                 "Standard_D4"
@@ -94,10 +96,10 @@
         },
         "srcIPInboundNSG": {
             "type": "string",
+            "defaultValue": "0.0.0.0/0",
             "metadata": {
                 "description": "Your source public IP address. Added to the inbound DefaultNSG on eth0 (MGMT)"
             },
-            "defaultValue": "0.0.0.0/0"
         },
         "baseUrl" : {
 		"type" : "string",
