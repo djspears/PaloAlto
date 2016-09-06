@@ -23,7 +23,7 @@
 	},
         "storageAccountNewOrExisting" : {
             "type": "string",
-            "defaultValue" : "new",
+            "defaultValue" : "existing",
             "allowedValues" : [
                 "new",
                 "existing"
@@ -53,6 +53,7 @@
         },
         "adminUserName": {
             "type": "string",
+            "defaultValue" : "fwadmin",
             "metadata": {
                 "description": "Username for VM-Series administrator"
             }
@@ -84,6 +85,7 @@
         },
         "vmSize": {
             "type": "string",
+            "defaultValue" : "Standard_D3",
             "allowedValues": [
                 "Standard_D3",
                 "Standard_D4"
@@ -110,7 +112,7 @@
       "metadata": {
         "description": "Name of the virtual network that the consumer wants to use"
       },
-      "defaultValue": "panVnet"
+      "defaultValue": "fwVnet"
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
