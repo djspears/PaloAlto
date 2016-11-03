@@ -2,6 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "PubFirewall2dnsrecord": {
+            "defaultValue": "lbsandfw2",
+            "type": "SecureString"
+        },        
+        "PubFirewall1dnsrecord": {
+            "defaultValue": "lbsandfw1",
+            "type": "SecureString"
+        },        
         "virtualMachines_NAT_Centos_72_adminPassword": {
             "defaultValue": null,
             "type": "SecureString"
@@ -1334,7 +1342,7 @@
                 "publicIPAllocationMethod": "Dynamic",
                 "idleTimeoutInMinutes": 4,
                 "dnsSettings": {
-                    "domainNameLabel": "lbsandfw1"
+                    "domainNameLabel": "[parameters('PubFirewall1dnsrecord')]"
                 }
             },
             "resources": [],
@@ -1350,7 +1358,7 @@
                 "publicIPAllocationMethod": "Dynamic",
                 "idleTimeoutInMinutes": 4,
                 "dnsSettings": {
-                    "domainNameLabel": "lbsandfw2"
+                    "domainNameLabel": "[parameters('PubFirewall2dnsrecord')]"
                 }
             },
             "resources": [],
