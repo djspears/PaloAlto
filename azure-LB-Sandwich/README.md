@@ -1,23 +1,39 @@
-# VM-Series for Microsoft Azure
+# 2 VM-Series Firewalls in a load balancer sandwich along with two webservers
 
-This is a "non official" repository for Azure Resoure Manager (ARM) templates to deploy two VM-Series Next-Generation firewall from Palo Alto Networks in to the Azure public cloud along with a pair of webservers.  I modified the PaloAltoNetworks repository to enable the ability to deploy a firewall with 4 interfaces.  Mgmt, Trust, Untrust, and DMZ.  I am also deploy a public and private load balancer along with two web servers.
+NOTE---DO NOT USE!!! THIS IS STILL UNDER CONSTRUCTION AND DOES NOT YET WORK!
 
-**Documentation**
+This ARM template deploys a VM-Series next generation firewall VM in an availability set of a Azure resource group. It lets you select your:
+- Username and Password
+- Resource Group and Storage Account inside it
+- VNET's CIDR (/16 range) with 4 subnets: Mgmt (0.0/24), Untrust (1.0/24), Trust (2.0/24), DMZ (3.0/24)
+- Azure VM size and login for VM-Series (BYOL edition) with 4 NIC's that map to above subnets
 
-- [Technical documentation](https://www.paloaltonetworks.com/documentation/71/virtualization/virtualization/set-up-the-vm-series-firewall-in-azur)
-- [VM-Series Datasheet](https://www.paloaltonetworks.com/products/secure-the-network/virtualized-next-generation-firewall/vm-series-for-azure)
-- [Deploying ARM Templates](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/#deploy-with-azure-cli)
+Note: Make sure to set a strong password for the firewall and set the SRCIPINBOUNDNSG to your source IP, i.e. restrict which IP (yours) can connect to your Azure deployment. If you keep it 0.0.0.0/0 then anyone can connect (or brute force) your VM's. 
 
-**NOTE:**
+This template is meant to let you do customized deployments of VM-Series instead of deploying from the Azure Marketplace. You can deploy using the "Deploy to Azure" button below or download the template and customize it to your needs. You can also fork the templates into your own GitHub repository.
 
-- Deploying ARM templates requires some customization of the ARM JSON template. Please review the basic structure of ARM templates.
-- Before you use the custom ARM templates here, you must first deploy the related VM from the Azure Marketplace into the intended/destination Azure location. This enables programmatic access (i.e. template-based deployment) to deploy the VM from Azure Marketplace. You can then delete the Marketplace-based deployment if you don't need it.
-- For example, if you plan to use a custom ARM template to deploy a BYOL VM of VM-Series into Australia-East, then first deploy the BYOL VM from Marketplace into Australia. This is needed only the first time. You can then delete this VM and its related resources. Now your ARM templates, from GitHub or via CLI, will work.
-- When deploying an ARM template you may see the following error if above steps have not been done once for each SKU:
+[<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdjspears%2FPaloAlto%2Fmaster%2FAzure-VM-with-4-Interfaces-avset%2FazureDeploy.json)
+[<img src="https://camo.githubusercontent.com/536ab4f9bc823c2e0ce72fb610aafda57d8c6c12/687474703a2f2f61726d76697a2e696f2f76697375616c697a65627574746f6e2e706e67" data-canonical-src="http://armviz.io/visualizebutton.png" style="max-width:100%;">](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fdjspears%2FPaloAlto%2Fmaster%2FAzure-VM-with-4-Interfaces-avset%2FazureDeploy.json)
 
-``` json
-"ResourceDeploymentFailure\",\r\n \"message\": \"The resource operation completed with terminal provisioning state
-'Failed'.\",\r\n \"details\": [\r\n {\r\n \"code\": \"ImageNotFound\",\r\n \"message\":
-\"The platform image 'paloaltonetworks:vmseries1:byol:latest' is not available.
-Verify that all fields in the storage profile are correct.\"
+
+## Deploy ARM Template using Azure CLI in ARM mode
+
+1. Download the two JSON files: azureDeploy.json and azureDeploy.parameters.json
+1. Customize the azureDeploy.parameters.json file and then deploy it from your computer.
+1. Install the latest <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/">Azure CLI</a> for your computer.</li>
+1. Validate and deploy the ARM template:
+
+``` azure
+    azure login
+    azure config mode arm
+    azure  group  template  validate  -g YourResourceGroupName \
+        -e  azureDeploy.json   -f  azureDeploy.parameters.json
+    azure group create -v -n YourResourceGroupName -l YourAzureRegion  \
+        -d  YourDeploymentLabel  -f azureDeploy.json -e azureDeploy.parameters.json
 ```
+
+**Check the status of your deployment:**
+
+- CLI: `azure vm show  -g YourResourceGroupName  -n YourDeploymentLabel`
+- Azure Portal: Your Resource Group > Deployment or Alert Logs
+
