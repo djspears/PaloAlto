@@ -148,12 +148,12 @@
         },
         "storageAccounts_lbsandwich_name": {
             "value": null
-        }
+        },
         "PubFirewall2dnsrecord": {
             "value": null
         },  
         "PubFirewall1dnsrecord": {
             "value": null
-        },
+        }
     }
 }
