@@ -4,11 +4,11 @@
     "parameters": {
         "PubFirewall2dnsrecord": {
             "defaultValue": "lbsandfw2",
-            "type": "SecureString"
+            "type": "String"
         },        
         "PubFirewall1dnsrecord": {
             "defaultValue": "lbsandfw1",
-            "type": "SecureString"
+            "type": "String"
         },        
         "virtualMachines_NAT_Centos_72_adminPassword": {
             "defaultValue": null,
