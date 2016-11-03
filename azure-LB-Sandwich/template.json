@@ -3,11 +3,11 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "PubFirewall2dnsrecord": {
-            "defaultValue": "lbsandfw2",
+            "defaultValue": "lbsandfw20",
             "type": "String"
         },        
         "PubFirewall1dnsrecord": {
-            "defaultValue": "lbsandfw1",
+            "defaultValue": "lbsandfw10",
             "type": "String"
         },        
         "virtualMachines_NAT_Centos_72_adminPassword": {
