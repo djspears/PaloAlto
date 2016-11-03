@@ -1,0 +1,153 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_NAT_Centos_72_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_NAT_Ubuntu_16_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_NATOUT_Ubuntu_16_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_panos1_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_panos2_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_WebServer1_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_WebServer2_adminPassword": {
+            "value": null
+        },
+        "availabilitySets_NAT_Tier_name": {
+            "value": null
+        },
+        "availabilitySets_VMSeriesFwAvSet_name": {
+            "value": null
+        },
+        "availabilitySets_Web_Tier_name": {
+            "value": null
+        },
+        "virtualMachines_NAT_Centos_72_name": {
+            "value": null
+        },
+        "virtualMachines_NAT_Ubuntu_16_name": {
+            "value": null
+        },
+        "virtualMachines_NATOUT_Ubuntu_16_name": {
+            "value": null
+        },
+        "virtualMachines_panos1_name": {
+            "value": null
+        },
+        "virtualMachines_panos2_name": {
+            "value": null
+        },
+        "virtualMachines_WebServer1_name": {
+            "value": null
+        },
+        "virtualMachines_WebServer2_name": {
+            "value": null
+        },
+        "loadBalancers_Private_Load_Balancer_name": {
+            "value": null
+        },
+        "loadBalancers_Public_Load_Balancer_name": {
+            "value": null
+        },
+        "networkInterfaces_nat_centos_72936_name": {
+            "value": null
+        },
+        "networkInterfaces_nat_ubuntu_16140_name": {
+            "value": null
+        },
+        "networkInterfaces_natout_ubuntu_16990_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth0_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth1_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth2_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth3_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth0_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth1_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth2_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth3_name": {
+            "value": null
+        },
+        "networkInterfaces_webserver1277_name": {
+            "value": null
+        },
+        "networkInterfaces_webserver211_name": {
+            "value": null
+        },
+        "networkSecurityGroups_panos1_DefaultNSG_name": {
+            "value": null
+        },
+        "networkSecurityGroups_panos2_DefaultNSG_name": {
+            "value": null
+        },
+        "publicIPAddresses_NAT_Centos_72_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_NAT_Ubuntu_16_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_NATOUT_Ubuntu_16_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_panos1_fwMgmtPublicIP_name": {
+            "value": null
+        },
+        "publicIPAddresses_panos2_fwMgmtPublicIP_name": {
+            "value": null
+        },
+        "publicIPAddresses_Public_Load_Balancer_name": {
+            "value": null
+        },
+        "publicIPAddresses_WebServer1_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_WebServer1ip143_name": {
+            "value": null
+        },
+        "publicIPAddresses_WebServer2_ip_name": {
+            "value": null
+        },
+        "routeTables_NAT_UDR_name": {
+            "value": null
+        },
+        "routeTables_Trust_UDR_name": {
+            "value": null
+        },
+        "routeTables_Untrust_UDR_name": {
+            "value": null
+        },
+        "routeTables_Web_UDR_name": {
+            "value": null
+        },
+        "virtualNetworks_Vnet_name": {
+            "value": null
+        },
+        "storageAccounts_djsstorage_name": {
+            "value": null
+        }
+    }
+}
