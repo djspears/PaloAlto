@@ -1,15 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "PubFirewall2dnsrecord": {
-            "defaultValue": "lbsandfw20",
-            "type": "String"
-        },        
-        "PubFirewall1dnsrecord": {
-            "defaultValue": "lbsandfw10",
-            "type": "String"
-        },        
+    "parameters": {     
         "virtualMachines_NAT_Centos_72_adminPassword": {
             "defaultValue": null,
             "type": "SecureString"
@@ -206,7 +198,14 @@
             "defaultValue": "lbsandwich",
             "type": "String"
         }
-    },
+        "PubFirewall2dnsrecord": {
+            "defaultValue": "lbsandfw20",
+            "type": "String"
+        },        
+        "PubFirewall1dnsrecord": {
+            "defaultValue": "lbsandfw10",
+            "type": "String"
+        },            },
     "variables": {},
     "resources": [
         {
