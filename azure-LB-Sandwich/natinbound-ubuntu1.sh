@@ -14,10 +14,10 @@ sudo sysctl -w net.ipv4.ip_forward=1
 
  
 # For login to NAT machine using ssh -p 50022
-sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 50022 -j DNAT --to $1.5.4:22
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 50022 -j DNAT --to 10.0.10.4:22
 
 # DNAT everything else to FW Untrust except itself
-sudo iptables -t nat -A PREROUTING -i eth0 \! -s $1.1.4 -j DNAT --to-destination $1.1.4
+sudo iptables -t nat -A PREROUTING -i eth0 \! -s 10.0.10.4 -j DNAT --to-destination 10.0.1.40
 sudo iptables -A FORWARD -i eth0 -j ACCEPT
  
 # MASQUERADE all other outdoing traffic from NAT
