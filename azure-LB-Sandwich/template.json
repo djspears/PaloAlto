@@ -4,7 +4,7 @@
     "parameters": {
         "virtualmachinesAdmin_password": {
             "defaultValue": null,
-            "type": "SecureString"ƒ
+            "type": "SecureString"
         },
         "availabilitySets_NAT_Tier_name": {
             "defaultValue": "NAT-Tier",
