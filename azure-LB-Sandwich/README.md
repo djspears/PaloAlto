@@ -1,14 +1,14 @@
 # 2 VM-Series Firewalls in a load balancer sandwich along with two webservers
 
-NOTE---DO NOT USE!!! THIS IS STILL UNDER CONSTRUCTION AND DOES NOT YET WORK!
+NOTE---DO NOT USE!!! THIS IS STILL UNDER CONSTRUCTION AND DOES NOT YET WORK AS INTENDED!
 
-This ARM template deploys a VM-Series next generation firewall VM in an availability set of a Azure resource group. It lets you select your:
-- Username and Password
-- Resource Group and Storage Account inside it
-- VNET's CIDR (/16 range) with 4 subnets: Mgmt (0.0/24), Untrust (1.0/24), Trust (2.0/24), DMZ (3.0/24)
-- Azure VM size and login for VM-Series (BYOL edition) with 4 NIC's that map to above subnets
-
-Note: Make sure to set a strong password for the firewall and set the SRCIPINBOUNDNSG to your source IP, i.e. restrict which IP (yours) can connect to your Azure deployment. If you keep it 0.0.0.0/0 then anyone can connect (or brute force) your VM's. 
+The intent of this ARM template is to deploy a firewall sandwich environment that includes:
+- One Public Load Balancer
+- Two Palo Alto Networks Firewalls
+- One Internal Load Balancer
+- Two Web Servers
+- VNET 10.0.0.0/16
+- Multiple Subnets and UDRs to support the traffic flow
 
 This template is meant to let you do customized deployments of VM-Series instead of deploying from the Azure Marketplace. You can deploy using the "Deploy to Azure" button below or download the template and customize it to your needs. You can also fork the templates into your own GitHub repository.
 
