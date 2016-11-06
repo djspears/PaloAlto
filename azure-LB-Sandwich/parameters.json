@@ -1,0 +1,141 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachinesAdmin_password": {
+            "value": null
+        },
+        "availabilitySets_NAT_Tier_name": {
+            "value": null
+        },
+        "availabilitySets_VMSeriesFwAvSet_name": {
+            "value": null
+        },
+        "availabilitySets_WEB_Tier_name": {
+            "value": null
+        },
+        "virtualMachines_NAT1_Ubuntu_16_name": {
+            "value": null
+        },
+        "virtualMachines_NAT2_Ubuntu_16_name": {
+            "value": null
+        },
+        "virtualMachines_NATOUT_Ubuntu_16_name": {
+            "value": null
+        },
+        "virtualMachines_panos1_name": {
+            "value": null
+        },
+        "virtualMachines_panos2_name": {
+            "value": null
+        },
+        "virtualMachines_WebServer1_name": {
+            "value": null
+        },
+        "virtualMachines_WebServer2_name": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_name": {
+            "value": null
+        },
+        "loadBalancers_PublicLB_name": {
+            "value": null
+        },
+        "networkInterfaces_nat1_ubuntu_16515_name": {
+            "value": null
+        },
+        "networkInterfaces_nat2_ubuntu_16988_name": {
+            "value": null
+        },
+        "networkInterfaces_natout_ubuntu_16942_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth0_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth1_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth2_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth3_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth0_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth1_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth2_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth3_name": {
+            "value": null
+        },
+        "networkInterfaces_webserver1575_name": {
+            "value": null
+        },
+        "networkInterfaces_webserver2900_name": {
+            "value": null
+        },
+        "networkSecurityGroups_panos1_DefaultNSG_name": {
+            "value": null
+        },
+        "networkSecurityGroups_panos2_DefaultNSG_name": {
+            "value": null
+        },
+        "publicIPAddresses_lbsandpubip_name": {
+            "value": null
+        },
+        "publicIPAddresses_NAT1_Ubuntu_16_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_NAT2_Ubuntu_16_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_NATOUT_Ubuntu_16_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_panos1_fwMgmtPublicIP_name": {
+            "value": null
+        },
+        "publicIPAddresses_panos2_fwMgmtPublicIP_name": {
+            "value": null
+        },
+        "publicIPAddresses_WebServer1ip171_name": {
+            "value": null
+        },
+        "publicIPAddresses_WebServer2_ip_name": {
+            "value": null
+        },
+        "routeTables_LB_UDR_name": {
+            "value": null
+        },
+        "routeTables_NAT_UDR_name": {
+            "value": null
+        },
+        "routeTables_Trust_UDR_name": {
+            "value": null
+        },
+        "routeTables_Untrust_UDR_name": {
+            "value": null
+        },
+        "routeTables_WEB_UDR_name": {
+            "value": null
+        },
+        "virtualNetworks_Vnet_name": {
+            "value": null
+        },
+        "storageAccounts_lbsandwich_name": {
+            "value": null
+        },
+        "PubFirewall2dnsrecord": {
+            "value": null
+        },  
+        "PubFirewall1dnsrecord": {
+            "value": null
+        }
+    }
+}
