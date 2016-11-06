@@ -1743,13 +1743,7 @@
                                 "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_LB_UDR_name'))]"
                             }
                         }
-                    },
-                    {
-                        "name": "WEB",
-                        "properties": {
-                            "addressPrefix": "10.0.5.0/24"
-                            }
-                        }
+                    }
                     }
                 ]
             },
