@@ -1669,7 +1669,7 @@
         "name": "[concat('NAT1-Ubuntu-16','/installcustomscript')]",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
-        "location": "[variables('location')]",
+        "location": "centralus",
         "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'NAT1-Ubuntu-16')]"],
         "properties":
          {   
@@ -1686,7 +1686,7 @@
         "name": "[concat('NAT2-Ubuntu-16','/installcustomscript')]",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
-        "location": "[variables('location')]",
+        "location": "centralus",
         "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'NAT2-Ubuntu-16')]"],
         "properties":
          {   
@@ -1703,7 +1703,7 @@
         "name": "[concat('WebServer1','/installcustomscript')]",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
-        "location": "[variables('location')]",
+        "location": "centralus",
         "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer1')]"],
         "properties":
          {   
@@ -1720,7 +1720,7 @@
         "name": "[concat('WebServer2','/installcustomscript')]",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
-        "location": "[variables('location')]",
+        "location": "centralus",
         "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer2')]"],
         "properties":
          {   
@@ -1737,7 +1737,7 @@
         "name": "[concat('NATOUT-Ubuntu-16','/installcustomscript')]",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
-        "location": "[variables('location')]",
+        "location": "centralus",
         "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'NATOUT-Ubuntu-16')]"],
         "properties":
          {   
