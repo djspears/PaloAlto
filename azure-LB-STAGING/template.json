@@ -1563,8 +1563,8 @@
             },
             "resources": [],
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/extensions', concat('WebServer1','/installcustomscript'))]",
-                "[resourceId('Microsoft.Compute/extensions', concat('WebServer2','/installcustomscript'))]",
+                "[resourceId('Microsoft.Compute/extensions', [concat('WebServer1','/installcustomscript')])]",
+                "[resourceId('Microsoft.Compute/extensions', [concat('WebServer1','/installcustomscript')])]",
             ]
         },
         {
