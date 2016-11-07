@@ -1827,7 +1827,7 @@
               "typeHandlerVersion": "1.2",
               "settings": {
                  "fileUris": ["https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-LB-Sandwich/natinbound-ubuntu2.sh"],
-                 "commandToExecute": "[concat('/bin/bash natinbound-ubuntu1.sh ')]"
+                 "commandToExecute": "[concat('/bin/bash natinbound-ubuntu2.sh ')]"
              }
          }
         },
