@@ -1144,9 +1144,7 @@
                     {
                         "name": "NAT",
                         "properties": {
-                            "addressPrefix": "10.0.10.0/24",
-                            "routeTable": {
-                            }
+                            "addressPrefix": "10.0.10.0/24"
                         }
                     },
                     {
