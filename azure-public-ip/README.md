@@ -33,7 +33,7 @@ This template is meant to let you do customized deployments of VM-Series instead
     azure login
     azure config mode arm
     azure  group  template  validate  -g YourResourceGroupName \
-        -e  azureDeploy.json   -f  azureDeploy.parameters.json
+        -e  template.json   -f  parameters.json
     azure group create -v -n YourResourceGroupName -l YourAzureRegion  \
         -d  YourDeploymentLabel  -f template.json -e parameters.json
 ```
