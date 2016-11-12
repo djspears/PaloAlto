@@ -1,6 +1,8 @@
 # 2 VM-Series Firewalls with public ip addresses and an internal load balancer with two webservers
 
-NOTE---DO NOT USE!!! THIS IS STILL UNDER CONSTRUCTION AND DOES NOT YET WORK AS INTENDED!
+NOTE---This deployment leverages the multiple public ip address feature that is currently in preview and is only available in
+the West Central US region.  This template deploys to the West Central US region and requires the the public ip address preview 
+is enabled on the subscription.
 
 The intent of this ARM template is to deploy two firewalls with public IP address both the managemant and eth1 ports to allow
 direct internet traffic to the eth1 interface from the internet.  It also deploys and internal load balancer and two web servers
