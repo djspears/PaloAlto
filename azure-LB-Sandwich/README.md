@@ -1,6 +1,5 @@
 # 2 VM-Series Firewalls in a load balancer sandwich along with two webservers
 
-NOTE---DO NOT USE!!! THIS IS STILL UNDER CONSTRUCTION AND DOES NOT YET WORK AS INTENDED!
 
 The intent of this ARM template is to deploy a firewall sandwich environment that includes:
 - One Public Load Balancer
@@ -27,9 +26,9 @@ This template creates all the infrastructure and appropriate UDRs. It does not c
     azure login
     azure config mode arm
     azure  group  template  validate  -g YourResourceGroupName \
-        -e  azureDeploy.json   -f  azureDeploy.parameters.json
+        -e  template.json   -f  parameters.json
     azure group create -v -n YourResourceGroupName -l YourAzureRegion  \
-        -d  YourDeploymentLabel  -f azureDeploy.json -e azureDeploy.parameters.json
+        -d  YourDeploymentLabel  -f template.json -e parameters.json
 ```
 
 **Check the status of your deployment:**
