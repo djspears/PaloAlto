@@ -1152,7 +1152,7 @@
             "dependsOn": []
         },
         { 
-        "name": "[concat('WebServer1','/installcustomscript')]",
+        "name": "WebServer1/installcustomscript",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
         "location": "westcentralus",
@@ -1169,7 +1169,7 @@
          }
         },
         { 
-        "name": "[concat('WebServer2','/installcustomscript')]",    
+        "name": "WebServer2/installcustomscript",    
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
         "location": "westcentralus",
