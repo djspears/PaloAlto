@@ -427,8 +427,8 @@
             "resources": [],
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]",
-                "['Microsoft.Network/virtualMachines/extensions/WebServer1/installcustomscript']",
-                "['Microsoft.Network/virtualMachines/extensions/WebServer2/installcustomscript']"            ]
+                "[resourceID('Microsoft.Network/virtualMachines/extensions', 'WebServer1-customscript')]",
+                "[resourceID('Microsoft.Network/virtualMachines/extensions', 'WebServer2-customscript')]"            ]
         },
         {
             "comments": "",
@@ -1240,7 +1240,7 @@
             "dependsOn": []
         },
         { 
-        "name": "WebServer1/installcustomscript",
+        "name": "WebServer1-customscript",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
         "location": "westcentralus",
@@ -1257,7 +1257,7 @@
          }
         },
         { 
-        "name": "WebServer2/installcustomscript",
+        "name": "WebServer2-customscript",
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "[variables('apiVersion')]",
         "location": "westcentralus",
