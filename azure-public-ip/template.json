@@ -426,8 +426,9 @@
             },
             "resources": [],
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
-            ]
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]",
+                "[resourceID('resource-group','Microsoft.Network/virtualMachines/extensions', 'WebServer1','/installcustomscript']",
+                "[resourceID('resource-group','Microsoft.Network/virtualMachines/extensions', 'WebServer2','/installcustomscript']"             ]
         },
         {
             "comments": "",
