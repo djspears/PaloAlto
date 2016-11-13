@@ -11,6 +11,8 @@ The intent of this ARM template is to deploy a firewall sandwich environment tha
 
 This template creates all the infrastructure and appropriate UDRs. It does not currently license or configure the firewall.  That will need to be done afterwards.  
 
+I included a LB-Template-Overview.pdf document in this repository to show the logical architecture and provide a guide through the deployment.  I tried not to skip too many steps but am assuming a basic knowledge of Azure and Palo Alto Networks Firewalls.
+
 [<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdjspears%2FPaloAlto%2Fmaster%2Fazure-LB-Sandwich%2Ftemplate.json)
 [<img src="https://camo.githubusercontent.com/536ab4f9bc823c2e0ce72fb610aafda57d8c6c12/687474703a2f2f61726d76697a2e696f2f76697375616c697a65627574746f6e2e706e67" data-canonical-src="http://armviz.io/visualizebutton.png" style="max-width:100%;">](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fdjspears%2FPaloAlto%2Fmaster%2Fazure-LB-Sandwich%2template.json)
 
