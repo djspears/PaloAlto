@@ -17,7 +17,7 @@ This template creates all the infrastructure and appropriate UDRs. It does not c
 
 ## Deploy ARM Template using Azure CLI in ARM mode
 
-1. Download the two JSON files: azureDeploy.json and azureDeploy.parameters.json
+1. Download the two JSON files: template.json and parameters.json
 1. Customize the azureDeploy.parameters.json file and then deploy it from your computer.
 1. Install the latest <a href="https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/">Azure CLI</a> for your computer.</li>
 1. Validate and deploy the ARM template:
