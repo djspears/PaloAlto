@@ -1,0 +1,1276 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_Admin_password": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_Admin_username": {
+            "defaultValue": "fwadmin",
+            "type": "String"
+        },
+        "storageAccounts_lbsandwich_name": {
+            "defaultValue": "pipdemo",
+            "type": "String"
+        },
+        "PubFirewall1dnsrecord": {
+            "defaultValue": "pipdemofw2",
+            "type": "String"
+        },        
+        "PubFirewall2dnsrecord": {
+            "defaultValue": "pipdemofw1",
+            "type": "String"
+        },
+        "publicIPAddresses_pipdemopanos1_name": {
+            "defaultValue": "pipdemopanos1",
+            "type": "String"
+        },
+        "publicIPAddresses_pipdemopanos2_name": {
+            "defaultValue": "pipdemopanos2",
+            "type": "String"
+        }
+    },
+    "variables": {
+        "apiVersion": "2015-05-01-preview",
+        "lbIDint": "[resourceId('Microsoft.Network/loadBalancers','lbsandInternal')]",
+        "loadBalancers_lbsandInternal_id": "[concat(variables('lbIDint'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
+        "loadBalancers_lbsandInternal_id_1": "[concat(variables('lbIDint'),'/backendAddressPools/WebServerPool')]",
+        "loadBalancers_lbsandInternal_id_2": "[concat(variables('lbIDint'),'/probes/WebServer1')]",
+        "loadBalancers_lbsandInternal_id_3": "[concat(variables('lbIDint'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
+        "loadBalancers_lbsandInternal_id_4": "[concat(variables('lbIDint'),'/backendAddressPools/WebServerPool')]",
+        "loadBalancers_lbsandInternal_id_5": "[concat(variables('lbIDint'),'/probes/WebServer1')]",
+    },
+    "resources": [
+        {
+            "comments": "",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "VMSeriesFwAvSet",
+            "apiVersion": "2015-06-15",
+            "location": "westcentralus",
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 3
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "WEB-Tier",
+            "apiVersion": "2015-06-15",
+            "location": "westcentralus",
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 2
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "panos1",
+            "apiVersion": "2015-06-15",
+            "location": "westcentralus",
+            "plan": {
+                "name": "byol",
+                "product": "vmseries1",
+                "publisher": "paloaltonetworks"
+            },
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'VMSeriesFwAvSet')]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_D3_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "paloaltonetworks",
+                        "offer": "vmseries1",
+                        "sku": "byol",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "osdisk",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('http', '://', parameters('storageAccounts_lbsandwich_name'), '.blob.core.windows.net/vhds/', 'panos1','-vmseries1-byol.vhd')]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "panos1",
+                    "adminUsername": "[parameters('virtualMachines_Admin_username')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_Admin_password')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth0')]",
+                            "properties": {
+                                "primary": true
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth1')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth2')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth3')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', 'VMSeriesFwAvSet')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_lbsandwich_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth0')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth1')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth2')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos1_eth3')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "panos2",
+            "apiVersion": "2015-06-15",
+            "location": "westcentralus",
+            "plan": {
+                "name": "byol",
+                "product": "vmseries1",
+                "publisher": "paloaltonetworks"
+            },
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'VMSeriesFwAvSet')]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_D3_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "paloaltonetworks",
+                        "offer": "vmseries1",
+                        "sku": "byol",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "osdisk",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('http', '://', parameters('storageAccounts_lbsandwich_name'), '.blob.core.windows.net/vhds/', 'panos2','-vmseries1-byol.vhd')]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "panos2",
+                    "adminUsername": "[parameters('virtualMachines_Admin_username')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_Admin_password')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth0')]",
+                            "properties": {
+                                "primary": true
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth1')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth2')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth3')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', 'VMSeriesFwAvSet')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_lbsandwich_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth0')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth1')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth2')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'panos2_eth3')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "WebServer1",
+            "apiVersion": "2015-06-15",
+            "location": "westcentralus",
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'WEB-Tier')]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_A0"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04.0-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "WebServer1",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_lbsandwich_name'), '.blob.core.windows.net/vhds/', 'WebServer1','2016104185639.vhd')]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "WebServer1",
+                    "adminUsername": "[parameters('virtualMachines_Admin_username')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_Admin_password')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'webserver1')]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', 'WEB-Tier')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_lbsandwich_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'webserver1')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "WebServer2",
+            "apiVersion": "2015-06-15",
+            "location": "westcentralus",
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'WEB-Tier')]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_A0"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04.0-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "WebServer2",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_lbsandwich_name'), '.blob.core.windows.net/vhds/', 'WebServer2','2016104184958.vhd')]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "WebServer2",
+                    "adminUsername": "[parameters('virtualMachines_Admin_username')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_Admin_password')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'webserver2')]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', 'WEB-Tier')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_lbsandwich_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'webserver2')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "lbsandInternal",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAddress": "10.0.4.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/Internal-LB')]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "WebServerPool"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "WEB",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('loadBalancers_lbsandInternal_id')]"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[variables('loadBalancers_lbsandInternal_id_1')]"
+                            },
+                            "probe": {
+                                "id": "[variables('loadBalancers_lbsandInternal_id_2')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "SSH",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('loadBalancers_lbsandInternal_id_3')]"
+                            },
+                            "frontendPort": 22,
+                            "backendPort": 22,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[variables('loadBalancers_lbsandInternal_id_4')]"
+                            },
+                            "probe": {
+                                "id": "[variables('loadBalancers_lbsandInternal_id_5')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "WebServer1",
+                        "properties": {
+                            "protocol": "Http",
+                            "port": 80,
+                            "requestPath": "/",
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos1_eth0",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces0"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig0",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'panos1_fwMgmtPublicIP')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/Mgmt')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'panos1_fwMgmtPublicIP')]",
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos1_eth1",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces1"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.1.4",
+                            "privateIPAllocationMethod": "Static",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'pipdemopanos1')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/Untrust')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": true
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos1_eth2",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces2"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig2",
+                        "properties": {
+                            "privateIPAddress": "10.0.2.4",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/Trust')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": true
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos1_eth3",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces3"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig3",
+                        "properties": {
+                            "privateIPAddress": "10.0.3.4",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/DMZ')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": true
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos2_eth0",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces0"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig0",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'panos2_fwMgmtPublicIP')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/Mgmt')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'panos2_fwMgmtPublicIP')]",
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos2_eth1",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces1"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.1.5",
+                            "privateIPAllocationMethod": "Static",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'pipdemopanos2')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/Untrust')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": true
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos2_eth2",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces2"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig2",
+                        "properties": {
+                            "privateIPAddress": "10.0.2.5",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/Trust')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": true
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "panos2_eth3",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "tags": {
+                "displayName": "NetworkInterfaces3"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig3",
+                        "properties": {
+                            "privateIPAddress": "10.0.3.5",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/DMZ')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": true
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "webserver1",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.5.4",
+                            "privateIPAllocationMethod": "Static",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'WebServer1')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/WEB')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'lbsandInternal'), '/backendAddressPools/WebServerPool')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'WebServer1')]",
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'lbsandInternal')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "webserver2",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.5.5",
+                            "privateIPAllocationMethod": "Static",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'WebServer2')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/WEB')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'lbsandInternal'), '/backendAddressPools/WebServerPool')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'WebServer2')]",
+                "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'lbsandInternal')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "panos1_DefaultNSG",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow-Outside-From-IP",
+                        "properties": {
+                            "description": "Rule",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "0.0.0.0/0",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "Allow-Intra",
+                        "properties": {
+                            "description": "Allow intra network traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "10.0.0.0/16",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 101,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "Default-Deny",
+                        "properties": {
+                            "description": "Default-Deny if we don't match Allow rule",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 200,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "panos2_DefaultNSG",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow-Outside-From-IP",
+                        "properties": {
+                            "description": "Rule",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "0.0.0.0/0",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "Allow-Intra",
+                        "properties": {
+                            "description": "Allow intra network traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "10.0.0.0/16",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 101,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "Default-Deny",
+                        "properties": {
+                            "description": "Default-Deny if we don't match Allow rule",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 200,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "panos1_fwMgmtPublicIP",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('PubFirewall1dnsrecord')]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "panos2_fwMgmtPublicIP",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('PubFirewall2dnsrecord')]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "pipdemopanos1",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('publicIPAddresses_pipdemopanos1_name')]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "pipdemopanos2",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('publicIPAddresses_pipdemopanos2_name')]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "WebServer1",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "WebServer2",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/routeTables",
+            "name": "LB_UDR",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    },
+                    {
+                        "name": "NAT",
+                        "properties": {
+                            "addressPrefix": "10.0.10.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    },
+                    {
+                        "name": "Untrust",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    },
+                    {
+                        "name": "DMZ",
+                        "properties": {
+                            "addressPrefix": "10.0.3.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/routeTables",
+            "name": "Trust_UDR",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    },
+                    {
+                        "name": "NAT",
+                        "properties": {
+                            "addressPrefix": "10.0.10.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    },
+                    {
+                        "name": "Untrust",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/routeTables",
+            "name": "Untrust_UDR",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "DMZ",
+                        "properties": {
+                            "addressPrefix": "10.0.3.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.1.4"
+                        }
+                    },
+                    {
+                        "name": "Trust",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.1.4"
+                        }
+                    },
+                    {
+                        "name": "LB",
+                        "properties": {
+                            "addressPrefix": "10.0.4.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.1.4"
+                        }
+                    },
+                    {
+                        "name": "WEB",
+                        "properties": {
+                            "addressPrefix": "10.0.5.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.1.4"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/routeTables",
+            "name": "WEB_UDR",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "NAT",
+                        "properties": {
+                            "addressPrefix": "10.0.10.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    },
+                    {
+                        "name": "Untrust",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    },
+                    {
+                        "name": "DMZ",
+                        "properties": {
+                            "addressPrefix": "10.0.3.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.4"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "Vnet",
+            "apiVersion": "2016-03-30",
+            "location": "westcentralus",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "Mgmt",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'panos2_DefaultNSG')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Untrust",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'Untrust_UDR')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Trust",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'Trust_UDR')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DMZ",
+                        "properties": {
+                            "addressPrefix": "10.0.3.0/24"
+                        }
+                    },
+                    {
+                        "name": "NAT",
+                        "properties": {
+                            "addressPrefix": "10.0.10.0/24"
+                        }
+                    },
+                    {
+                        "name": "Internal-LB",
+                        "properties": {
+                            "addressPrefix": "10.0.4.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'LB_UDR')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "WEB",
+                        "properties": {
+                            "addressPrefix": "10.0.5.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'WEB_UDR')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', 'panos2_DefaultNSG')]",
+                "[resourceId('Microsoft.Network/routeTables', 'Untrust_UDR')]",
+                "[resourceId('Microsoft.Network/routeTables', 'Trust_UDR')]",
+                "[resourceId('Microsoft.Network/routeTables', 'LB_UDR')]",
+                "[resourceId('Microsoft.Network/routeTables', 'WEB_UDR')]"
+            ]
+        },
+        {
+            "comments": "",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_lbsandwich_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "westcentralus",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        },
+        { 
+        "name": "[concat('WebServer1','/installcustomscript')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "apiVersion": "[variables('apiVersion')]",
+        "location": "westcentralus",
+        "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer1')]"],
+        "properties":
+         {   
+              "publisher": "Microsoft.OSTCExtensions",
+              "type": "CustomScriptForLinux",
+              "typeHandlerVersion": "1.2",
+              "settings": {
+                 "fileUris": ["https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-public-ip/WServer1.sh"],
+                 "commandToExecute": "[concat('/bin/bash WServer1.sh ')]"
+             }
+         }
+        },
+        { 
+        "name": "[concat('WebServer2','/installcustomscript')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "apiVersion": "[variables('apiVersion')]",
+        "location": "westcentralus",
+        "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer2')]"],
+        "properties":
+         {   
+              "publisher": "Microsoft.OSTCExtensions",
+              "type": "CustomScriptForLinux",
+              "typeHandlerVersion": "1.2",
+              "settings": {
+                 "fileUris": ["https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-public-ip/WServer2.sh"],
+                 "commandToExecute": "[concat('/bin/bash WServer2.sh ')]"
+             }
+         }
+        }
+    ]
+}
