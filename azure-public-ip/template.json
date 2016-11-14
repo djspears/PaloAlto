@@ -281,7 +281,25 @@
                     ]
                 }
             },
-            "resources": [],
+            "resources": [
+                { 
+                    "name": "installcustomscript",
+                    "type": "extensions",
+                    "apiVersion": "[variables('apiVersion')]",
+                    "location": "westcentralus",
+                    "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer1')]"],
+                    "properties":
+                        {   
+                            "publisher": "Microsoft.OSTCExtensions",
+                            "type": "CustomScriptForLinux",
+                             "typeHandlerVersion": "1.2",
+                             "settings": {
+                            "fileUris": ["https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-public-ip/WServer1.sh"],
+                            "commandToExecute": "[concat('/bin/bash WServer1.sh ')]"
+                            }
+                        }
+                }
+            ],
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/availabilitySets', 'WEB-Tier')]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_lbsandwich_name'))]",
@@ -335,7 +353,25 @@
                     ]
                 }
             },
-            "resources": [],
+            "resources": [
+            { 
+                    "name": "installcustomscript",
+                    "type": "extensions",
+                    "apiVersion": "[variables('apiVersion')]",
+                    "location": "westcentralus",
+                    "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer2')]"],
+                    "properties":
+                        {   
+                            "publisher": "Microsoft.OSTCExtensions",
+                            "type": "CustomScriptForLinux",
+                             "typeHandlerVersion": "1.2",
+                             "settings": {
+                            "fileUris": ["https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-public-ip/WServer2.sh"],
+                            "commandToExecute": "[concat('/bin/bash WServer2.sh ')]"
+                            }
+                        }
+                }
+            ],
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/availabilitySets', 'WEB-Tier')]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_lbsandwich_name'))]",
@@ -1150,41 +1186,7 @@
             "properties": {},
             "resources": [],
             "dependsOn": []
-        },
-        { 
-        "name": "WebServer1/installcustomscript",
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "apiVersion": "[variables('apiVersion')]",
-        "location": "westcentralus",
-        "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer1')]"],
-        "properties":
-         {   
-              "publisher": "Microsoft.OSTCExtensions",
-              "type": "CustomScriptForLinux",
-              "typeHandlerVersion": "1.2",
-              "settings": {
-                 "fileUris": ["https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-public-ip/WServer1.sh"],
-                 "commandToExecute": "[concat('/bin/bash WServer1.sh ')]"
-             }
-         }
-        },
-        { 
-        "name": "WebServer2/installcustomscript",    
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "apiVersion": "[variables('apiVersion')]",
-        "location": "westcentralus",
-        "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer2')]"],
-        "properties":
-         {   
-              "publisher": "Microsoft.OSTCExtensions",
-              "type": "CustomScriptForLinux",
-              "typeHandlerVersion": "1.2",
-              "settings": {
-                 "fileUris": ["https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-public-ip/WServer2.sh"],
-                 "commandToExecute": "[concat('/bin/bash WServer2.sh ')]"
-             }
-         }
-        },
+        },                
         {
             "comments": "",
             "type": "Microsoft.Network/loadBalancers",
@@ -1273,6 +1275,6 @@
                 "[resourceId('Microsoft.Network/virtualMachines/extensions','WebServer1','installcustomscript')]",
                 "[resourceId('Microsoft.Network/virtualMachines/extensions','WebServer2','installcustomscript')]"
             ]
-        },
+        }
     ]
 }
