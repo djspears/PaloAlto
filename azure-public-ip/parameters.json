@@ -1,0 +1,141 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_panos1_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_panos2_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_WebServer1_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_WebServer2_adminPassword": {
+            "value": null
+        },
+        "extensions_installcustomscript_protectedSettings": {
+            "value": null
+        },
+        "extensions_installcustomscript_protectedSettings_1": {
+            "value": null
+        },
+        "availabilitySets_VMSeriesFwAvSet_name": {
+            "value": null
+        },
+        "availabilitySets_WEB_Tier_name": {
+            "value": null
+        },
+        "virtualMachines_panos1_name": {
+            "value": null
+        },
+        "virtualMachines_panos2_name": {
+            "value": null
+        },
+        "virtualMachines_WebServer1_name": {
+            "value": null
+        },
+        "virtualMachines_WebServer2_name": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth0_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth1_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth2_name": {
+            "value": null
+        },
+        "networkInterfaces_panos1_eth3_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth0_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth1_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth2_name": {
+            "value": null
+        },
+        "networkInterfaces_panos2_eth3_name": {
+            "value": null
+        },
+        "networkInterfaces_webserver1_name": {
+            "value": null
+        },
+        "networkInterfaces_webserver2_name": {
+            "value": null
+        },
+        "networkSecurityGroups_panos1_DefaultNSG_name": {
+            "value": null
+        },
+        "networkSecurityGroups_panos2_DefaultNSG_name": {
+            "value": null
+        },
+        "publicIPAddresses_panos1_fwMgmtPublicIP_name": {
+            "value": null
+        },
+        "publicIPAddresses_panos2_fwMgmtPublicIP_name": {
+            "value": null
+        },
+        "publicIPAddresses_pipdemopanos1_name": {
+            "value": null
+        },
+        "publicIPAddresses_pipdemopanos2_name": {
+            "value": null
+        },
+        "publicIPAddresses_WebServer1_name": {
+            "value": null
+        },
+        "publicIPAddresses_WebServer2_name": {
+            "value": null
+        },
+        "routeTables_LB_UDR_name": {
+            "value": null
+        },
+        "routeTables_Trust_UDR_name": {
+            "value": null
+        },
+        "routeTables_Untrust_UDR_name": {
+            "value": null
+        },
+        "routeTables_WEB_UDR_name": {
+            "value": null
+        },
+        "virtualNetworks_Vnet_name": {
+            "value": null
+        },
+        "storageAccounts_pipdemo_name": {
+            "value": null
+        },
+        "extensions_installcustomscript_name": {
+            "value": null
+        },
+        "extensions_installcustomscript_name_1": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_id": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_id_1": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_id_2": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_id_3": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_id_4": {
+            "value": null
+        },
+        "loadBalancers_lbsandInternal_id_5": {
+            "value": null
+        }
+    }
+}
