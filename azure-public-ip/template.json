@@ -718,11 +718,6 @@
                             "subnet": {
                                 "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/WEB')]"
                             },
-                            "loadBalancerBackendAddressPools": [
-                                {
-                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'lbsandInternal'), '/backendAddressPools/WebServerPool')]"
-                                }
-                            ]
                         }
                     }
                 ],
@@ -757,11 +752,6 @@
                             "subnet": {
                                 "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'Vnet'), '/subnets/WEB')]"
                             },
-                            "loadBalancerBackendAddressPools": [
-                                {
-                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'lbsandInternal'), '/backendAddressPools/WebServerPool')]"
-                                }
-                            ]
                         }
                     }
                 ],
