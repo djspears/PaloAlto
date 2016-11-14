@@ -283,11 +283,11 @@
             },
             "resources": [
                 { 
-                    "name": "installcustomscript",
+                    "name": "customscript",
                     "type": "extensions",
                     "apiVersion": "[variables('apiVersion')]",
                     "location": "westcentralus",
-                    "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer1')]"],
+                    "dependsOn": [],
                     "properties":
                         {   
                             "publisher": "Microsoft.OSTCExtensions",
@@ -355,11 +355,11 @@
             },
             "resources": [
             { 
-                    "name": "installcustomscript",
+                    "name": "customscript",
                     "type": "extensions",
                     "apiVersion": "[variables('apiVersion')]",
                     "location": "westcentralus",
-                    "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer2')]"],
+                    "dependsOn": [],
                     "properties":
                         {   
                             "publisher": "Microsoft.OSTCExtensions",
@@ -1272,8 +1272,8 @@
             "resources": [],
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', 'Vnet')]",
-                "[resourceId('Microsoft.Network/virtualMachines/extensions','WebServer1','installcustomscript')]",
-                "[resourceId('Microsoft.Network/virtualMachines/extensions','WebServer2','installcustomscript')]"
+                "[resourceId('Microsoft.Network/virtualMachines/extensions','WebServer1','customscript')]",
+                "[resourceId('Microsoft.Network/virtualMachines/extensions','WebServer2','customscript')]"
             ]
         }
     ]
