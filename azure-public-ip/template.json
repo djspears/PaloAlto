@@ -287,7 +287,7 @@
                     "type": "extensions",
                     "apiVersion": "[variables('apiVersion')]",
                     "location": "westcentralus",
-                    "dependsOn": [],
+                    "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer1')]"],
                     "properties":
                         {   
                             "publisher": "Microsoft.OSTCExtensions",
@@ -359,7 +359,7 @@
                     "type": "extensions",
                     "apiVersion": "[variables('apiVersion')]",
                     "location": "westcentralus",
-                    "dependsOn": [],
+                    "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', 'WebServer2')]"],
                     "properties":
                         {   
                             "publisher": "Microsoft.OSTCExtensions",
