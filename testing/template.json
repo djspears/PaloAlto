@@ -16,7 +16,7 @@
         }
     },
     "variables": {
-        "uniqueId": "[uniqueString(resourceGroup().id)]",
+        "uniqueId": "[uniqueString(resourceGroup().id)]"
     },
     "resources": [
         {
