@@ -1,0 +1,602 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Username": {
+            "defaultValue": "paloalto",
+            "type": "String"
+        },
+        "Password": {
+            "defaultValue": null,
+            "type": "SecureString"
+        }
+    },
+    "variables": {
+        "uniqueId": "[uniqueString(resourceGroup().id)]",
+        "storageAccountName": "[concat('storage', variables('uniqueId'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/routeTables",
+            "name": "RT-Web",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "WebRoute-Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.5"
+                        }
+                    },
+                    {
+                        "name": "WebRoute-Data",
+                        "properties": {
+                            "addressPrefix": "10.0.3.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.2.5"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "name": "RT-Data",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "DataRoute-Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.5"
+                        }
+                    },
+                    {
+                        "name": "DataRoute-Web",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.5"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "name": "RT-Untrust",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "UntrustRoute-Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "UntrustRoute-Web",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.1.5"
+                        }
+                    },
+                    {
+                        "name": "UntrustRoute-Data",
+                        "properties": {
+                            "addressPrefix": "10.0.3.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.1.5"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2016-06-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "NET-Demo",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "Management",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    },
+                    {
+                        "name": "Untrust",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'RT-Untrust')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Web",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'RT-Web')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Data",
+                        "properties": {
+                            "addressPrefix": "10.0.3.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'RT-Data')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', 'RT-Web')]",
+                "[resourceId('Microsoft.Network/routeTables', 'RT-Data')]",
+               "[resourceId('Microsoft.Network/routeTables', 'RT-Untrust')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "IP-FW-Management",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[concat('fwmanagement', variables('uniqueId'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "IP-FW-Outbound",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[concat('fwoutbound', variables('uniqueId'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "IP-FW-App1",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[concat('fwapp1', variables('uniqueId'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-FW-Management",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'IP-FW-Management')]",
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "FW-Management",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'IP-FW-Management')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Management')]"
+                            },
+                            "privateIpAddress": "10.0.0.5"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-FW-Untrust",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]"
+            ],
+            "properties": {
+                "enableIPForwarding": true,
+                "ipConfigurations": [
+                    {
+                        "name": "FW-Route",
+                        "properties": {
+                            "privateIpAddress": "10.0.1.5",
+                            "privateIPAllocationMethod": "Static",
+                            "primary": true,
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Untrust')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "FW-Outbound",
+                        "properties": {
+                            "privateIPAddress": "10.0.1.6",
+                            "privateIPAllocationMethod": "Static",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'IP-FW-Outbound')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Untrust')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "FW-App1",
+                        "properties": {
+                            "privateIPAddress": "10.0.1.7",
+                            "privateIPAllocationMethod": "Static",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'IP-FW-App1')]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Untrust')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-FW-Web",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]"
+            ],
+            "properties": {
+                "enableIPForwarding": true,
+                "ipConfigurations": [
+                    {
+                        "name": "FW-Web",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Web')]"
+                            },
+                            "privateIpAddress": "10.0.2.5"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-FW-Data",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]"
+            ],
+            "properties": {
+                "enableIPForwarding": true,
+                "ipConfigurations": [
+                    {
+                        "name": "FW-Data",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Data')]"
+                            },
+                            "privateIpAddress": "10.0.3.5"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-Web",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "Web",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Web')]"
+                            },
+                            "privateIpAddress": "10.0.2.10"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-Data",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "Data",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Data')]"
+                            },
+                            "privateIpAddress": "10.0.3.10"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[variables('storageAccountName')]",
+            "apiVersion": "2016-01-01",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "VM-FW",
+            "location": "[resourceGroup().location]",
+            "plan": {
+                "name": "bundle2",
+                "product": "vmseries1",
+                "publisher": "paloaltonetworks"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_F4S"
+                },
+                "osProfile": {
+                    "computerName": "VM-FW",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "paloaltonetworks",
+                        "offer": "vmseries1",
+                        "sku": "bundle2",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "osdisk",
+                        "vhd": {
+                            "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-FW.vhd')]"
+                        },
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Management')]",
+                            "properties": {
+                                "primary": true
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Untrust')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Web')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Data')]",
+                            "properties": {
+                                "primary": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'IP-FW-Management')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Management')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Untrust')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Web')]",
+                "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW-Data')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+            ]
+        },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-Web",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Web')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW')]"
+      ],
+      "properties": {
+       "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-Web",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Web-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Web-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-Web')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-Data",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Data')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-Data",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Data-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Data-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-Data')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    }
+    ],
+    "outputs": {
+        "firewall management": {
+            "type": "String",
+            "value": "[reference('IP-FW-Management').dnsSettings.fqdn]"
+        },
+        "application": {
+            "type": "String",
+            "value": "[reference('IP-FW-App1').dnsSettings.fqdn]"
+        }
+    }
+}
