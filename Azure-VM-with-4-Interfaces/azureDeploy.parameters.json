@@ -120,7 +120,7 @@
       "metadata": {
         "description": "Name of the virtual network that the consumer wants to use"
       },
-      "defaultValue": "DSPEARSfwVNET"
+      "defaultValue": "fwVNET"
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
