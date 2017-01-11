@@ -60,7 +60,7 @@
         },
         "adminUserName": {
             "type": "string",
-            "defaultValue": "davidspears",
+            "defaultValue": "fwadmin",
 	    "metadata": {
                 "description": "Username for VM-Series administrator"
             }
@@ -152,7 +152,7 @@
     },
     "subnet3Name": {
       "type": "string",
-      "defaultValue": "Restricted",
+      "defaultValue": "DMZ",
       "metadata": {
         "description": "Subnet for the Restricted Servers"
       }
