@@ -54,7 +54,7 @@
         },
         "adminUserName": {
             "type": "string",
-            "defaultValue" : "davidspears",
+            "defaultValue" : "fwadmin",
             "metadata": {
                 "description": "Username for VM-Series administrator"
             }
@@ -89,8 +89,9 @@
             "defaultValue" : "Standard_D3",
             "allowedValues": [
                 "Standard_D3",
-                "Standard_D4"
-            ],
+                "Standard_D4",
+		"Standard_DS4_v2"  
+	     ],
             "metadata": {
                 "description": "Azure VM size for VM-Series"
             }
