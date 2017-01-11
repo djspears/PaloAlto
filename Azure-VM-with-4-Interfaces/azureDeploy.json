@@ -67,7 +67,7 @@
         },
         "adminPassword": {
             "type": "securestring",
-	    "defaultValue": "Pal0Alt0!29",
+	    "defaultValue": "Pal0Alt029",
             "metadata": {
                 "description": "Password for VM-Series administrator"
             }
@@ -153,7 +153,7 @@
     },
     "subnet3Name": {
       "type": "string",
-      "defaultValue": "Restricted",
+      "defaultValue": "DMZ",
       "metadata": {
         "description": "Subnet for the Restricted Servers"
       }
