@@ -1,0 +1,102 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    },
+    "vmName": {
+      "type": "string"
+    },
+    "vmSize": {
+      "type": "string"
+    },
+    "imageSku": {
+      "type": "string"
+    },
+    "imageOffer": {
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string"
+    },
+    "mgmtNicName": {
+      "type": "string"
+    },
+    "untrustNicName": {
+      "type": "string"
+    },
+    "trustNicName": {
+      "type": "string"
+    }
+  },
+  "variables" : {
+      "imagePublisher": "paloaltonetworks",
+      "apiVersion": "2015-06-15"
+  },
+  "resources": [
+     {
+        "apiVersion": "[variables('apiVersion')]",
+        "type": "Microsoft.Compute/virtualMachines",
+        "name": "[parameters('vmName')]",
+        "location": "[parameters('location')]",
+        "plan": {
+           "name": "[parameters('imageSku')]",
+           "product": "[parameters('imageOffer')]",
+           "publisher": "[variables('imagePublisher')]"
+        },
+        "properties": {
+            "hardwareProfile": {
+                "vmSize": "[parameters('vmSize')]"
+            },
+            "osProfile": {
+                "computerName": "[parameters('vmName')]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "adminPassword": "[parameters('adminPassword')]"
+            },
+            "storageProfile": {
+                "imageReference": {
+                    "publisher": "[variables('imagePublisher')]",
+                    "offer": "[parameters('imageOffer')]",
+                    "sku": "[parameters('imageSku')]",
+                    "version": "latest"
+                },
+                "osDisk": {
+                    "name": "osdisk",
+                    "vhd": {
+                        "uri": "[concat('http://', parameters('storageAccountName'), '.blob.core.windows.net/vhds/', parameters('vmName'), '-', parameters('imageOffer'), '-', parameters('imageSku'), '.vhd')]"
+                    },
+                    "caching": "ReadWrite",
+                    "createOption": "FromImage"
+                }
+            },
+           "networkProfile": {
+                "networkInterfaces": [{
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('mgmtNicName')))]",
+                    "properties": {
+                        "primary": true
+                    }
+                }, {
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('untrustNicName')))]",
+                    "properties": {
+                        "primary": false
+                    }
+                }, {
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('trustNicName')))]",
+                    "properties": {
+                        "primary": false
+                    }
+                }]
+            }
+        }
+     }
+  ],
+  "outputs": {
+  }
+}
