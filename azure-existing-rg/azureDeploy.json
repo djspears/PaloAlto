@@ -150,7 +150,7 @@
         "artifactsBaseUrl": "",
         "description": "URL to acquire other VM-Series for Azure templates"
       },
-      "defaultValue": "https://raw.githubusercontent.com/djspears/master/PaloAlto/azure-existing-rg"
+      "defaultValue": "https://raw.githubusercontent.com/djspears/PaloAlto/master/azure-existing-rg"
 
     },
     "PublicIPNewOrExisting": {
