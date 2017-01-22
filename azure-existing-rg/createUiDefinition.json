@@ -51,7 +51,7 @@
                    "type": "Standard_LRS"
                },
                "constraints": {
-                   "allowedTypes": ["Standard_LRS","Standard_GRS","Standard_RAGRS"]
+                   "allowedTypes": ["Standard_LRS","Standard_GRS","Standard_RAGRS","Premium_LRS"]
                }
             },
 	    {
@@ -187,8 +187,10 @@
                 "Standard_D3_v2",
                 "Standard_D4",
                 "Standard_D4_v2",
-                "Standard_A4"                  
-                ]
+                "Standard_A4",
+		"Standard_DS3_v2",
+		"Standard_DS4_v2"
+	      ]
             },
 	    "osPlatform": "Linux",
             "imageReference": {
