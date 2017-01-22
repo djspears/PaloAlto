@@ -1,0 +1,342 @@
+{
+  "handler": "Microsoft.Compute.MultiVm", 
+  "version": "0.0.1-preview",
+  "parameters": {
+    "basics": [
+      {
+        "name": "adminUsername",
+        "type": "Microsoft.Compute.UserNameTextBox",
+        "label": "Username",
+        "toolTip": "Admin username for VM-Series",
+	"osPlatform": "Linux"
+      },
+      {
+        "name": "SSHCredntials",
+        "type": "Microsoft.Compute.CredentialsCombo",
+        "label": {
+                  "authenticationType": "Authentication type",
+                  "password": "Password",
+                  "confirmPassword": "Confirm password",
+                  "sshPublicKey": "SSH public key"
+                },
+        "toolTip": {
+                "authenticationType": "",
+                "password": "",
+                "sshPublicKey": ""
+              },
+         "constraints": {
+                "required": true
+              },
+         "options": {
+              "hideConfirmation": false
+         },
+	 "osPlatform": "Linux"
+       }
+    ],
+    "steps": [
+      {
+        "name": "panvnetconfig",
+        "label": "Storage and Networking",
+        "subLabel": {
+          "preValidation": "New or existing resources",
+          "postValidation": "Done"
+        },
+        "bladeTitle": "Storage and Networking",
+        "elements": [
+            {
+               "name": "newStorageAccount",
+               "type": "Microsoft.Storage.StorageAccountSelector",
+               "label": "Storage Account Name",
+               "defaultValue": {
+                   "type": "Premium_LRS"
+               },
+               "constraints": {
+                   "allowedTypes": ["Standard_LRS","Standard_GRS","Standard_RAGRS","Premium_LRS"]
+               },
+               "options": {
+                   "hideExisting": false
+               },
+               "visible": true
+            },
+	    {
+	       "name": "vnetSpec",
+               "type": "Microsoft.Network.VirtualNetworkCombo",
+               "label": {
+                   "virtualNetwork": "Virtual network",
+                   "subnets": "Subnets"
+               },
+               "toolTip": {
+                   "virtualNetwork": "To use an existing VNET, 3 subnets must already exist for Mgmt, Untrust and Trust. For a new VNET, the template will create them.",
+                   "subnets": ""
+               },
+               "options": {
+		"hideExisting" : false
+               },
+               "defaultValue": {
+                   "name": "fwVNET",
+                   "addressPrefixSize": "/16"
+               },
+               "constraints": {
+                   "minAddressPrefixSize": "/29"
+               },
+               "subnets": {
+                   "subnet0": {
+                       "label": "Management Subnet",
+                       "defaultValue": {
+                           "name": "Mgmt",
+                           "addressPrefixSize": "/24"
+                       },
+                       "constraints": {
+                           "minAddressPrefixSize": "/29",
+                           "minAddressCount": 1,
+                           "requireContiguousAddresses": true
+                       }
+                   },
+                   "subnet1": {
+                       "label": "Untrust Subnet",
+                       "defaultValue": {
+                           "name": "Untrust",
+                           "addressPrefixSize": "/24"
+                       },
+                       "constraints": {
+                           "minAddressPrefixSize": "/29",
+                           "minAddressCount": 4,
+                           "requireContiguousAddresses": true
+                       }
+                   },
+                   "subnet2": {
+                       "label": "Trust Subnet",
+                       "defaultValue": {
+                           "name": "Trust",
+                           "addressPrefixSize": "/24"
+                       },
+                       "constraints": {
+                           "minAddressPrefixSize": "/29",
+                           "minAddressCount": 4,
+                           "requireContiguousAddresses": true
+                       }
+                   }
+                }
+	    },
+            {
+               "name": "srcIPInboundNSG",
+               "type": "Microsoft.Common.TextBox",
+               "label": "Network Security Group: inbound source IP",
+               "toolTip": "Your source IP address (or range) to restrict access to public interfaces. Sets DefaultNSG.",
+               "defaultValue": "0.0.0.0/0",
+        	"constraints": {
+            	    "required": true,
+            	    "regex": "(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$",
+            	    "validationMessage": "0.0.0.0/0 or x.x.x.x/x"
+         	}
+            }
+          ]
+      },
+      {
+        "name": "VMSeriesConfig",
+        "label": "VM-Series Configuration",
+        "subLabel": {
+          "preValidation": "VM's size, name and DNS name ",
+          "postValidation": "Done"
+        },
+        "bladeTitle": "VM-Series Configuration",
+        "elements": [
+         {
+            "name": "dnsNameForPublicIP",
+            "type": "Microsoft.Network.PublicIpAddressCombo",
+            "label": {
+                "publicIpAddress": "Public IP address",
+                "domainNameLabel": "Managment interface DNS Name"
+            },
+            "constraints": {
+              "required": {
+                       "domainNameLabel": true
+                     }
+            },
+            "toolTip": {
+                "domainNameLabel": "Unique DNS name prefix for public IP of management interface (eth0)"
+            },
+            "defaultValue": {
+                "publicIpAddressName": "fwMgmtPublicIP",
+                "domainNameLabel": ""
+            },
+            "options": {
+                "hideNone": false,
+                "hideDomainNameLabel": false,
+		"hideExisting" : false
+            },
+            "visible": true
+          },
+         { 
+            "name": "UntrustdnsNameForPublicIP",
+            "type": "Microsoft.Network.PublicIpAddressCombo",
+            "label": {
+                "publicIpAddress": "Untrust Public IP address",
+                "domainNameLabel": "Untrust interface DNS Name"
+            },
+            "constraints": {
+              "required": {
+                       "domainNameLabel": true
+                     }
+            },
+            "toolTip": {
+                "domainNameLabel": "Unique DNS name prefix for public IP of Untrust interface (eth1)"
+            },
+            "defaultValue": {
+                "publicIpAddressName": "fwUntrustPublicIP",
+                "domainNameLabel": ""
+            },
+            "options": {
+                "hideNone": false,
+                "hideDomainNameLabel": false,
+                "hideExisting" : false
+            },
+            "visible": true
+          },
+       {
+        "name": "vmName",
+        "type": "Microsoft.Common.TextBox",
+        "label": "VM name of VM-Series",
+        "toolTip": "VM name and hostname in resource group after deployment",
+        "constraints": {
+            "required": true,
+            "regex": "^[a-z0-9]{8,24}$",
+            "validationMessage": "VM names must be between 8 and 24 characters long, and can contain only numbers and lowercase letters."
+         }
+       },
+          {
+            "name": "vmSize",
+            "type": "Microsoft.Compute.SizeSelector",
+            "label": "Virtual machine size",
+            "toolTip": "Size of Azure virtual machine to provision for VM-Series",
+            "recommendedSizes": [
+              "Standard_D3",
+              "Standard_D4"
+            ],
+            "constraints": {
+              "allowedSizes": [
+                "Standard_D3",
+                "Standard_D3_v2",
+                "Standard_D4",
+                "Standard_D4_v2",
+                "Standard_A4",
+                "Standard_D5_v2",  
+                "Standard_D14_v2",  
+                "Standard_A4"
+                ]
+            },
+	    "osPlatform": "Linux",
+            "imageReference": {
+              "publisher": "paloaltonetworks",
+              "offer": "vmseries1",
+              "sku": "byol"
+            }
+          },
+          {
+            "name": "Email",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Customer Email-ID",
+            "toolTip": "Customer Email-ID",
+            "defaultValue": "abc@paloaltonetworks.com",
+            "constraints": {
+               "required": false,
+               "validationMessage": "Email-ID must be in the form name@domain"
+            },
+            "visible": true
+          }
+        ]
+      },
+      {
+        "name": "EnableAS",
+        "label": "Availability Set configuration for VM-Series",
+        "subLabel": {
+          "preValidation": "",
+          "postValidation": "Done"
+        },
+        "bladeTitle": "Availability Set configuration for VM-Series",
+        "elements": [
+         {
+            "name": "EnableASYesOrNo",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Enable Availability Sets?",
+            "defaultValue": "No",
+            "toolTip": "",
+            "constraints": {
+              "allowedValues": [
+               {
+                 "label": "Yes",
+                 "value": "Yes"
+               },
+               {
+                 "label": "No",
+                 "value": "No"
+               }
+             ]
+            },
+            "visible": true
+          },
+          {
+            "name": "ASFaultDomains",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Number of Fault domains in the Availability Set",
+            "toolTip": "Number of Fault domains in the Availability Set",
+            "defaultValue": "3",
+            "constraints": {
+               "required": true,
+               "regex": "^[1-3]",
+               "validationMessage": "Number of Fault domains must be between 1 to 3"
+            },
+            "visible": true
+          },
+          {
+            "name": "ASUpdateDomains",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Number of Update domains in the Availability Set",
+            "toolTip": "Number of Update domains in the Availability Set",
+            "defaultValue": "05",
+            "constraints": {
+               "required": true,
+               "regex": "^[1-20]",
+               "validationMessage": "Number of Update domains must be between 1 to 19"
+            },
+            "visible": true
+          }
+        ]
+      }
+    ],
+    "outputs": {
+      "location": "[location()]",
+      "storageAccountName": "[steps('panvnetconfig').newStorageAccount.name]",
+      "storageAccountType": "[steps('panvnetconfig').newStorageAccount.type]",
+      "storageAccountNewOrExisting" : "[steps('panvnetconfig').newStorageAccount.newOrExisting]",
+      "storageAccountExistingRG": "[steps('panvnetconfig').newStorageAccount.resourceGroup]",
+      "MgmtPublicIPAddressName": "[steps('VMSeriesConfig').dnsNameForPublicIP.domainNameLabel]",
+      "MgmtPublicIP": "[steps('VMSeriesConfig').dnsNameForPublicIP.newOrExistingOrNone]",
+      "MgmtPublicIPRGName": "[steps('VMSeriesConfig').dnsNameForPublicIP.resourceGroup]",
+      "UntrustPublicIPAddressName": "[steps('VMSeriesConfig').UntrustdnsNameForPublicIP.domainNameLabel]",
+      "UntrustPublicIP": "[steps('VMSeriesConfig').UntrustdnsNameForPublicIP.newOrExistingOrNone]",
+      "UntrustPublicIPRGName": "[steps('VMSeriesConfig').UntrustdnsNameForPublicIP.resourceGroup]",
+      "vmName": "[steps('VMSeriesConfig').vmName]",
+      "adminUsername": "[basics('adminUsername')]",
+      "adminPassword": "[basics('SSHCredntials').password]",
+      "authenticationType": "[basics('SSHCredntials').authenticationType]",
+      "sshKey": "[basics('SSHCredntials').sshPublicKey]",
+      "vmSize": "[steps('VMSeriesConfig').vmSize]",
+      "srcIPInboundNSG": "[steps('panvnetconfig').srcIPInboundNSG]",
+      "virtualNetworkName": "[steps('panvnetconfig').vnetSpec.name]",
+      "virtualNetworkExistingRGName": "[steps('panvnetconfig').vnetSpec.resourceGroup]",
+      "virtualNetworkAddressPrefix": "[steps('panvnetconfig').vnetSpec.addressPrefix]",
+      "vnetNewOrExisting": "[steps('panvnetconfig').vnetSpec.newOrExisting]",
+      "subnet0Name": "[steps('panvnetconfig').vnetSpec.subnets.subnet0.name]",
+      "subnet1Name": "[steps('panvnetconfig').vnetSpec.subnets.subnet1.name]",
+      "subnet2Name": "[steps('panvnetconfig').vnetSpec.subnets.subnet2.name]",
+      "subnet0Prefix": "[steps('panvnetconfig').vnetSpec.subnets.subnet0.addressPrefix]",
+      "subnet1Prefix": "[steps('panvnetconfig').vnetSpec.subnets.subnet1.addressPrefix]",
+      "subnet2Prefix": "[steps('panvnetconfig').vnetSpec.subnets.subnet2.addressPrefix]",
+      "subnet0StartAddress": "[steps('panvnetconfig').vnetSpec.subnets.subnet0.startAddress]",
+      "subnet1StartAddress": "[steps('panvnetconfig').vnetSpec.subnets.subnet1.startAddress]",
+      "subnet2StartAddress": "[steps('panvnetconfig').vnetSpec.subnets.subnet2.startAddress]",
+      "Email": "[steps('VMSeriesConfig').Email]"
+    }
+  }
+}
