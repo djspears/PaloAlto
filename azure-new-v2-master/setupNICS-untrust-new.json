@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "nicName": {
+      "type": "string"
+    },
+    "subnet1Name": {
+      "type": "string"
+    },
+    "subnet1StartAddress": {
+      "type": "string"
+    },
+    "virtualNetworkName": {
+      "type": "string"
+    },
+    "virtualNetworkExistingRGName": {
+      "type": "string"
+    },
+    "UntrustPublicIPAddressName": {
+      "type": "string"
+    },
+    "UntrustPublicIP": {
+      "type": "string"
+    }
+  },
+  "variables": {
+      "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+      "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',parameters('subnet1Name'))]",
+      "untrustpip": "[concat('untrustIP-', parameters('UntrustPublicIPAddressName'))]"
+  },
+  "resources": [
+    {
+      "name": "[concat('eth1-', parameters('nicName'))]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+      "enableIPForwarding": true,
+        "ipConfigurations": [
+          {
+            "name": "ipconfig-untrust",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('untrustpip'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnet1Ref')]"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {}
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "MgmtPublicIPAddressName": {
+      "type": "string"
+    },
+    "publicIPAddressType": {
+      "type": "string"
+    },
+    "MgmtPublicIPRGName": {
+      "type": "string"
+    },
+    "UntrustPublicIPAddressName": {
+      "type": "string"
+    },
+    "UntrustPublicIP": {
+      "type": "string"
+    },
+    "baseUrl": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "SettingUpPublicIPUrl": "[concat(parameters('baseUrl'),'/publicip-untrust-',parameters('UntrustPublicIP'),'.json')]"
+  },
+  "resources": [
+    {
+      "name": "UntrustSettingUpPublicIPs",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": { 
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('SettingUpPublicIPUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "publicIPAddressType": {
+            "value": "[parameters('publicIPAddressType')]"
+          },
+          "UntrustPublicIPAddressName" : {
+            "value": "[parameters('UntrustPublicIPAddressName')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
