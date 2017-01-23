@@ -22,6 +22,13 @@
        },
        "defaultValue": "VM-Series"
     },
+    "availabilitySetName": {
+       "type": "string",
+       "metadata": {
+          "description": "Availability set Name for Firewall"
+       },
+       "defaultValue": "VMSeriesFwAvSet"
+    },  
     "vmSize": {
        "type": "string",
        "allowedValues": [
