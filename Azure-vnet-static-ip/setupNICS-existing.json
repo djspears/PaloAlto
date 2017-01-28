@@ -88,7 +88,7 @@
             "name": "ipconfig-untrust",
             "properties": {
               "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "192.168.0.36",
+              "privateIPAddress": "[parameters('subnet1StartAddress')]",
               "subnet": {
                 "id": "[variables('subnet1Ref')]"
               }
