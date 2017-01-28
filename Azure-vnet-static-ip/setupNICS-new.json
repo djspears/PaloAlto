@@ -64,7 +64,7 @@
             "name": "ipconfig-mgmt",
             "properties": {
               "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[parameters('subnet0StartAddress')]",
+              "privateIPAddress": "192.168.0.76",
               "publicIPAddress": {
                  "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressName'))]"
               },
