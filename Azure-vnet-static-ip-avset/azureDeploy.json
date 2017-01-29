@@ -512,7 +512,7 @@
           "contentVersion": "1.0.0.0"
         },
 	"availabilitySet": {
-                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
+                    "value": "AS-FW"
         },      
         "parameters": {
           "location": {
