@@ -269,7 +269,8 @@
     "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',parameters('subnet1Name'))]",
     "subnet2Ref": "[concat(variables('vnetID'),'/subnets/',parameters('subnet2Name'))]",
     "subnet3Ref": "[concat(variables('vnetID'),'/subnets/',parameters('subnet3Name'))]",
-    "publicIPAddressType": "Dynamic",
+	 "availabilitySetName": "VMSeriesFwAvSet",
+	 "publicIPAddressType": "Dynamic",
     "subnets": [
       {
         "name": "[parameters('subnet0Name')]",
@@ -335,18 +336,11 @@
       }
     },
     {
-          "type": "Microsoft.Compute/availabilitySets",
-          "name": "AS-FW",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "tags": {},
-          "properties": {
-              "platformUpdateDomainCount": 2,
-              "platformFaultDomainCount": 2
-          },
-          "resources": [],
-          "dependsOn": []
-    },
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[variables('availabilitySetName')]",
+      "location": "[resourceGroup().location]"
+    }, 
     {
       "name": "SettingUpPublicIPs",
       "type": "Microsoft.Resources/deployments",
