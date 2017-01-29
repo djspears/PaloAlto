@@ -510,8 +510,7 @@
         "Microsoft.Resources/deployments/SettingUpPublicIPs",
         "[concat('Microsoft.Resources/deployments/', variables('nsgName'))]",
         "Microsoft.Resources/deployments/SettingUpVirtualNetwork",
-        "Microsoft.Resources/deployments/SetupNetworkInterfaces",
-        "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
+        "Microsoft.Resources/deployments/SetupNetworkInterfaces"
       ],
       "properties": {
         "availabilitySet": {
