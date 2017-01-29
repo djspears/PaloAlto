@@ -504,15 +504,15 @@
         "templateLink": {
           "uri": "[variables('vmTemplateUrl')]",
           "contentVersion": "1.0.0.0"
-        },
-	"availabilitySet": {
-                    "value": "AS-FW"
-        },      
+        }     
         "parameters": {
           "location": {
             "value": "[parameters('location')]"
-          },
-          "vmName": {
+           },
+	  "availabilitySetName": {
+          "value": "[variables('availabilitySetName')]"
+           },
+	  "vmName": {
             "value": "[parameters('vmName')]"
           },
           "imageSku": {
