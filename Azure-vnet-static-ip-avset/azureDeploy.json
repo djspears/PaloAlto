@@ -505,15 +505,15 @@
         "Microsoft.Resources/deployments/SettingUpVirtualNetwork",
         "Microsoft.Resources/deployments/SetupNetworkInterfaces"
       ],
-      "properties": {
-        "availabilitySet": {
-                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
-        },
+      "properties": {     
         "mode": "Incremental",
         "templateLink": {
           "uri": "[variables('vmTemplateUrl')]",
           "contentVersion": "1.0.0.0"
         },
+	"availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
+        },      
         "parameters": {
           "location": {
             "value": "[parameters('location')]"
