@@ -154,13 +154,6 @@
         "description": "DMZ subnet start address"
       }
       },
-    "fwavset": {
-      "type": "string",
-      "defaultValue": "AS-FW",
-      "metadata": {
-        "description": "Availability Set for Firewall VM"
-      }
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
