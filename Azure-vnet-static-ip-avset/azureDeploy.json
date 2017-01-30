@@ -511,12 +511,12 @@
           "uri": "[variables('vmTemplateUrl')]",
           "contentVersion": "1.0.0.0"
         },
-        "parameters": {
+	  "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('availabilitySetName'))]"
+        },
+	      "parameters": {
           "location": {
             "value": "[parameters('location')]"
-          },
-          "availabilitySetName": {
-          "value": "[parameters('availabilitySetName')]"
           },
           "vmName": {
             "value": "[parameters('vmName')]"
