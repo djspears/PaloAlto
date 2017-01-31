@@ -154,13 +154,6 @@
         "description": "DMZ subnet start address"
       }
       },
-    "availabilitySet": {
-      "type": "string",
-      "defaultValue": "AS-FW",
-      "metadata": {
-        "description": "Availability Set for Firewall VM"
-      }
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -343,7 +336,7 @@
     },
     {
           "type": "Microsoft.Compute/availabilitySets",
-          "name": "[parameters('availabilitySet')]",
+          "name": "AS-FW",
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "tags": {},
@@ -514,7 +507,7 @@
       ],
       "properties": {
         "mode": "Incremental",
-        "availabilitySet": { "id": "[parameters('availabilitySet']" },
+        "availabilitySet": { "id": "AS-FW" },
         "templateLink": {
           "uri": "[variables('vmTemplateUrl')]",
           "contentVersion": "1.0.0.0"
