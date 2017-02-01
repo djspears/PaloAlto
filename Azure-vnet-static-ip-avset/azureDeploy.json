@@ -173,7 +173,7 @@
         "artifactsBaseUrl": "",
         "description": "URL to acquire other VM-Series for Azure templates"
       },
-      "defaultValue": "https://raw.githubusercontent.com/djspears/PaloAlto/master/Azure-vnet-static-ip"
+      "defaultValue": "https://raw.githubusercontent.com/djspears/PaloAlto/master/Azure-vnet-static-ip-avset"
 
     },
     "PublicIPNewOrExisting": {
@@ -308,6 +308,19 @@
 
   },
   "resources": [
+	  {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "AS-FW",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {
+                "platformUpdateDomainCount": 2,
+                "platformFaultDomainCount": 2
+            },
+            "resources": [],
+            "dependsOn": []
+        },	  
     {
       "name": "SettingUpStorageAccount",
       "type": "Microsoft.Resources/deployments",
