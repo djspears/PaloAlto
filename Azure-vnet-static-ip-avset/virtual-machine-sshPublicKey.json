@@ -52,6 +52,9 @@
            "publisher": "[parameters('imagePublisher')]"
         },
         "properties": {
+		"availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
+                },		
             "hardwareProfile": {
                 "vmSize": "[parameters('vmSize')]"
             },
