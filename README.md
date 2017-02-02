@@ -1,9 +1,8 @@
 # VM-Series for Microsoft Azure
 
-This is a "non official" repository for Azure Resoure Manager (ARM) templates to deploy VM-Series Next-Generation firewall from Palo Alto Networks into the Azure public cloud.  The initial driver for this repository was that I wanted to modified the PaloAltoNetworks template to enable the ability to deploy a firewall with 4 interfaces.  Mgmt, Trust, Untrust, and Restricted.  There are two flavors in this repository, one that does includes a deployemnt of an availability set and the other does not.
+This is a "non official" repository for Azure Resoure Manager (ARM) templates to deploy VM-Series Next-Generation firewall from Palo Alto Networks into the Azure public cloud.  The initial driver for this repository was that I wanted to modified the PaloAltoNetworks template to enable the ability to deploy a firewall with 4 interfaces.  Mgmt, Trust, Untrust, and DMZ.  There are many variations of this scenario in this repository.  
 
-I have create a few other deployment scenarios to deploy a more functioning solution to make it easier to quickly build an basic working
-environment.
+
 
 **Documentation**
 
