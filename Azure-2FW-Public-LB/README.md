@@ -3,7 +3,7 @@
 [<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdjspears%2FPaloAlto%2Fmaster%2FAzure-2FW-Public-LB%2FazureDeploy.json)
 
 
-- This is a template was created to support the deployment of a Public Azure Load Balancer in front of 2 Palo Alto Networks Firewalls.  It supports the following features:
+- This template was created to support the deployment of a Public Azure Load Balancer in front of 2 Palo Alto Networks Firewalls.  It supports the following features:
 - The 2 firewalls deploys with 4 interfaces.  1 MGMT and 3 data plane. 
 - Static IP addresses are assigned to the interfaces based on the input in the starting ip address fields.
 - This template deloys into existing VNETs and storage accounts within the same region.  As a result, the storage account and VNET must be created before deploying this template.
