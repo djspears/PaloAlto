@@ -10,11 +10,14 @@ FEATURES:
 - This template allows the Firewall to be integrated with a preexisting Microsoft Load Balancer, Backend Pools, and Avaiablility Set.
 
 The following Storage Account types are supported:
+
                     -Standard_LRS
                     -Standard_GRS
                     -Standard_RAGRS
                     -Premium_LRS
+                    
 The following VMs are supported:
+
                     -Standard_D3
                     -Standard_D4
                     -Standard_D3_v2
@@ -23,7 +26,7 @@ The following VMs are supported:
                     -Standard_DS3_v2
                     -Standard_DS4_v2
         
-        NOTE: Make sure the VMs are supported in the specific Storage Account Type and Azure Region.
+NOTE: Make sure the VMs are supported in the specific Storage Account Type and Azure Region.
 
 REQUIREMNTS:
 - The firewall is put into an existing Availability Set that needs to be provided during deploymnet.  The Availability Set is tied to Ethernet 1, which is normally a Untrust Zone.
