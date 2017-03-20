@@ -375,7 +375,7 @@
                     "publisher": "[variables('imagePublisher')]",
                     "offer": "[variables('imageOffer')]",
                     "sku": "[variables('imageSku')]",
-                    "version": "latest"
+                    "version": "7.1.1"
                 },
                 "osDisk": {
                     "name": "osdisk",
