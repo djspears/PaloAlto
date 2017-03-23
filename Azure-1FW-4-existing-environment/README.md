@@ -8,12 +8,12 @@ This template was created to support the deployment of a 4 interface Palo Alto N
 -VNET - with subnets
 -Storage Account for the firewall VHD
 
-It has the follwing following features and requirements:
+It has the follwing following features:
 
 FEATURES:
 - The firewall deploys with 4 interfaces.  1 MGMT and 3 data plane into an existing environment.
 - Static IP addresses assignment is used for the firewall interfaces.
-- This template allows the Firewall to be integrated with a preexisting Microsoft Load Balancer, Backend Pools, and Avaiablility Set.
+
 
 The following Storage Account types are supported:
 
@@ -34,3 +34,4 @@ The following VMs are supported:
         
 NOTE: Make sure the VMs are supported in the specific Storage Account Type and Azure Region.
 
+After deploying, this firewall can be intetgrated into a load balancer setup via the Azure Portal.
