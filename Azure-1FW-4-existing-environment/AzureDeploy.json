@@ -191,7 +191,14 @@
       "metadata": {
         "description": "Name of FW1 MGMT Public Address"
       }
-    }
+    },
+    "nsgName": {
+      "type": "string",
+      "defaultValue": "DefaultNSG",
+      "metadata": {
+        "description": "Name of existing Network Security Group for MGMT FW interface"
+      }
+    }  
   },
   "variables": {
     "apiVersion": "2015-06-15",
