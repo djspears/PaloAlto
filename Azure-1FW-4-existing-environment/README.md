@@ -8,6 +8,7 @@ This template was created to support the deployment of a 4 interface Palo Alto N
                     -Availability Set for the Firewall
                     -VNET - with subnets
                     -Storage Account for the firewall VHD
+                    -Resource Group for Firewall
             
 
 FEATURES:
