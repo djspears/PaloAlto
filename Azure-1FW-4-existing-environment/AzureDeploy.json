@@ -298,7 +298,7 @@
               "privateIPAddress": "[parameters('subnet1StartAddress')]",
               "subnet": {
                 "id": "[variables('subnet1Ref')]"
-              },
+              }
             }
           }
         ]
