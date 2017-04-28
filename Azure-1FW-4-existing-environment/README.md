@@ -2,9 +2,9 @@
 
 [<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdjspears%2FPaloAlto%2Fmaster%2FAzure-1FW-4-existing-environment%2FAzureDeploy.json)
 
-This template was created to support the deployment of a 4 interface Palo Alto Networks firewall into an existing Microsoft Azure environment that has the following items already deployed:
+This template was created to support the deployment of a 4 interface Palo Alto Networks firewall into an existing Microsoft Azure environment that has the following items already created:
 
-                    -Load Balancer - If being used
+                  
                     -Availability Set for the Firewall
                     -VNET - with subnets
                     -Storage Account for the firewall VHD
