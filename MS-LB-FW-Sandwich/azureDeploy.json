@@ -779,7 +779,7 @@
                         "publisher": "paloaltonetworks",
                         "offer": "vmseries1",
                         "sku": "bundle2",
-                        "version": "latest"
+                        "version": "7.1.1"
                     },
                     "osDisk": {
                         "name": "osdisk",
@@ -857,7 +857,7 @@
                         "publisher": "paloaltonetworks",
                         "offer": "vmseries1",
                         "sku": "bundle2",
-                        "version": "latest"
+                        "version": "7.1.1"
                     },
                     "osDisk": {
                         "name": "osdisk",
